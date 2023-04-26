@@ -1,0 +1,16 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  text-align: center;
+  .title {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+  .sub-title {
+    margin-top: 60px;
+    margin-bottom: 50px;
+    font-size: 1.8rem;
+    line-height: 24px;
+    font-weight: 300;
+  }
+}

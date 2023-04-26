@@ -1,0 +1,51 @@
+@import '../../../styles/Variable/index';
+
+// List cart
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: calc($height-header - 30px);
+  height: $height-header;
+  padding: 47px 40px 10px 40px;
+  height: 100%;
+
+  @include screen-lg {
+    padding: 47px 20px 10px 20px;
+  }
+}
+
+// CartItem
+
+.wrapper-cartitem {
+  padding: 10px 20px;
+  height: 90px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.2);
+  @include flex(center, space-between, nowrap);
+  .content {
+    @include flex(start, center, wrap);
+    flex-direction: column;
+    .number {
+      font-weight: bold;
+      font-size: 3.4rem;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .title {
+      margin-top: 20px;
+      font-size: 1.4rem;
+      color: white;
+      line-height: 20px;
+    }
+  }
+  .wrapper-circle {
+    canvas {
+      width: 72px !important;
+      height: 72px !important;
+      display: unset !important;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  padding: 10px 30px;
+
+  @include screen-lg {
+    padding: 10px 20px;
+  }
+}

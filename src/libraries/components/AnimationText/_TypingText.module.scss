@@ -1,0 +1,6 @@
+@import '../../../styles/Variable/index';
+
+.title-helper {
+  height: 60px;
+  @include flex();
+}

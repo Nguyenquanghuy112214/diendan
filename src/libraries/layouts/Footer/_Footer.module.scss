@@ -1,0 +1,118 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  padding: 60px 100px 0px 100px;
+  background-color: $footer-color;
+  .wrapper-listcol {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+    // col1
+    .col1 {
+      @include flex(start, space-between, nowrap);
+      flex-direction: column;
+      .logo {
+        width: 182px;
+        height: 58px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 8px;
+        }
+      }
+      .slogan {
+        margin: 32px 0;
+        font-size: 1.6rem;
+        line-height: 20px;
+      }
+      .adress-main {
+        margin-bottom: 40px;
+
+        font-size: 1.6rem;
+        line-height: 24px;
+      }
+      .wrapper-platforms {
+        @include flex();
+        .img {
+          flex: 1;
+          width: 60px;
+          height: 60px;
+          margin-right: 30px;
+          img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    // col2
+    .col2 {
+      @include flex(start, space-evenly, nowrap);
+      width: 20%;
+      height: 100%;
+      flex-direction: column;
+      .title {
+        width: 100%;
+        font-size: 2rem;
+        margin-top: -20px;
+      }
+      .item {
+        display: block;
+        cursor: pointer;
+        font-size: 1.6rem;
+        margin-top: -24px;
+      }
+    }
+    // col3
+    .col3 {
+      .title {
+        font-size: 2rem;
+        font-weight: 500;
+        margin-bottom: 45px;
+      }
+      .email {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        font-size: 2.2rem;
+        font-weight: 400;
+        margin-bottom: 30px;
+      }
+      .phone {
+        span {
+          cursor: pointer;
+          &:nth-child(2) {
+            text-decoration: underline white;
+          }
+        }
+      }
+
+      .adress {
+        line-height: 24px;
+      }
+      .time {
+      }
+    }
+  }
+  .coppy {
+    height: 60px;
+    margin-top: 20px;
+    font-weight: 500;
+    @include flex();
+  }
+}
+
+.m10 {
+  margin: 14px 0;
+}
+.f16 {
+  font-size: 1.6rem;
+}
+.w {
+  color: white;
+}

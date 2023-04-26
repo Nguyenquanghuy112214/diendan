@@ -1,0 +1,10 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  display: flex;
+
+  .children {
+    flex: 1;
+    background-color: #fbfbfb;
+  }
+}

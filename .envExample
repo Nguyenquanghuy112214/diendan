@@ -1,0 +1,4 @@
+# Dev
+NODE_ENV=development
+PORT=4202
+REACT_APP_API_DOMAIN=

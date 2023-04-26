@@ -1,0 +1,30 @@
+@use './variables';
+@mixin flex($align-item: center, $justify-content: center, $wrap: wrap) {
+  display: flex;
+  flex-wrap: $wrap;
+  align-items: $align-item;
+  justify-content: $justify-content;
+}
+
+@mixin screen-sm {
+  @media only screen and (max-width: $screen-sm) {
+    @content;
+  }
+}
+
+@mixin screen-md {
+  @media only screen and (max-width: $screen-md) {
+    @content;
+  }
+}
+
+@mixin screen-lg {
+  @media only screen and (max-width: $screen-lg) {
+    @content;
+  }
+}
+@mixin screen-xl {
+  @media only screen and (min-width: $screen-xl) {
+    @content;
+  }
+}

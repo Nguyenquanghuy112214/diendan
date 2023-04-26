@@ -1,0 +1,26 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  background-color: #e2e6e7;
+  border-radius: 20px;
+  padding: 10px 20px;
+  // margin-bottom: 20px;
+  @include flex();
+  flex-direction: column;
+  .title {
+    font-size: 2.4rem;
+    font-weight: 400;
+    width: 100%;
+  }
+
+  .wrapper-input {
+    background-color: white;
+    border-radius: 12px;
+    @include flex();
+    input {
+      height: 100%;
+      width: 500px;
+      padding: 0px 10px;
+    }
+  }
+}
