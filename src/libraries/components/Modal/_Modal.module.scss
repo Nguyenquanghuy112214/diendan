@@ -1,0 +1,64 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $modal-color;
+  z-index: 9;
+  @include flex();
+  &-detail {
+    position: relative;
+    padding: 40px 80px;
+    background-color: white;
+    border-radius: 8px;
+    min-width: 80vw;
+    max-width: 90vw;
+    min-height: 60vh;
+    max-height: 90vh;
+    .title {
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: #000000;
+    }
+    .help {
+      position: absolute;
+      top: 13px;
+      right: 90px;
+      width: 60px;
+      height: 60px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+      }
+    }
+    .img {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+      }
+    }
+    .children {
+      margin-top: 60px;
+    }
+  }
+}

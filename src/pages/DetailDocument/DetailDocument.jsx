@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import useDocument from '~/hooks/redux/document/useDocument';
 //
 import { Helmet } from 'react-helmet';
+// motion
+import { motion } from 'framer-motion';
 // components
 import Header from '~/libraries/layouts/Header/Header';
 import DetailBook from '~/libraries/components/DetailBook/DetailBook';

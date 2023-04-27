@@ -1,0 +1,45 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  .title {
+    line-height: 2.4rem;
+    color: #000000;
+    font-weight: 500;
+    span {
+      color: #255ef1;
+    }
+  }
+  .form {
+    padding: 40px 160px 0 160px;
+  }
+  .chose-file {
+    width: 430px;
+    margin-left: 290px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f8ff;
+    border: 1px dashed #384eb730;
+    cursor: pointer;
+    img {
+      width: 60px;
+      height: 50px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+    .browse-file {
+      text-align: center;
+      margin-bottom: 20px;
+
+      button {
+        padding: 10px;
+        background-color: #b9bcbe;
+        border-radius: 99px;
+        width: 150px;
+      }
+    }
+    .suport {
+      font-size: 1.3rem;
+      color: #676767;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
+// navigate
+import { useNavigate } from 'react-router-dom';
+import { routePath } from '~/routing/pathRouting';
 // img
 import logo from '~/assets/img/logo.png';
 // Css module
@@ -10,6 +12,7 @@ import Menu from '~/libraries/components/Menu/Menu';
 const cx = classNames.bind(styles);
 
 function Navbar() {
+  const navigate = useNavigate();
   const [active, setActive] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,14 +20,17 @@ function Navbar() {
     }, [1000]);
     return () => clearTimeout(timer);
   }, []);
+  const handleClick = () => {
+    navigate(routePath.dashboardpage);
+  };
   return (
     <div className="navbar">
       <div className={cx('logo-title')}>
-        <div className={cx('logo')}>
+        <div onClick={handleClick} className={cx('logo')}>
           <img src={logo} alt="logo" />
         </div>
       </div>
-      <div className={cx('wrapper-menu', `${active ? 'animation' : ''}`)}>
+      <div className={cx('wrapper-menu', `${active ? 'animationscroll' : ''}`)}>
         <Menu />
       </div>
     </div>

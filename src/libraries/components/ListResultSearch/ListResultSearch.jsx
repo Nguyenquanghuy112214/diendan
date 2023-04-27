@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { routePath } from '~/routing/pathRouting';
 // reacticon
 import { AiFillEye } from 'react-icons/ai';
+// redux
+import useCloseModal from '~/hooks/redux/closemodal/useCloseModal';
 // img
 import { imgListDataSearch } from '~/assets/img/listdatasearch';
 // thu vien animation
@@ -38,6 +40,10 @@ function ListResultSearch() {
 ListResultSearch.propTypes = {};
 
 const ListRusult = () => {
+  const { setActiveModal } = useCloseModal();
+  const postDocument = () => {
+    setActiveModal(true);
+  };
   return (
     <motion.div
       variants={staggerContainer()}
@@ -49,7 +55,7 @@ const ListRusult = () => {
       <motion.div variants={opacity(0.1, 1)} className={cx('wrapper-title')}>
         <div className={cx('title-listime')}>MẦM NON (10000 Bài)</div>
         <div className={cx('wrapper-nivigate')}>
-          <span>Xem tất cả</span> | <span>Đưa bài giảng lên</span>
+          <span>Xem tất cả</span> | <span onClick={postDocument}>Đưa bài giảng lên</span>
         </div>
       </motion.div>
       <motion.div variants={opacity(0.2, 1)} className={cx('wrapper-list')}>

@@ -1,10 +1,18 @@
 export const staggerContainer = (staggerChildren, delayChildren) => ({
-  hidden: {},
+  hidden: {
+    opacity: 0,
+  },
   show: {
+    opacity: 1,
+
     transition: {
+      duration: 1,
       staggerChildren,
       delayChildren,
     },
+  },
+  exit: {
+    opacity: 0,
   },
 });
 
@@ -47,7 +55,7 @@ export const tranformY = (delay, duration, top) => ({
   hidden: {
     opacity: 0,
 
-    y: !top ? '50%' : '-50',
+    y: !top ? '50%' : '-30%',
   },
   show: {
     opacity: 1,
@@ -59,6 +67,10 @@ export const tranformY = (delay, duration, top) => ({
       duration,
       ease: 'easeOut',
     },
+  },
+  exit: {
+    opacity: 0,
+    y: !top ? '50%' : '-50',
   },
 });
 

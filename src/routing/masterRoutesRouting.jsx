@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 // config routes
 import configRoutes from './configRouting';
 // components
@@ -22,7 +22,7 @@ export default function MasterRoute() {
             path={route.path}
             element={
               <Layout title={route.title}>
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<Loading active opa={0.6} />}>
                   <Page />
                 </Suspense>
               </Layout>

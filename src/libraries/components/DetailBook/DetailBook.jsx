@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { imgDetailPage } from '~/assets/img/detailpage';
 // components
 import Button from '~/libraries/form/button/Button';
-
+// motion
+import { motion } from 'framer-motion';
 // module css
 import classNames from 'classnames/bind';
 import styles from './_DetailBook.module.scss';

@@ -36,7 +36,7 @@ function Menu() {
 
   return (
     <>
-      <Loading fixed opa={1} active={menu !== undefined && menu.length === 0} />
+      <Loading fixed opa={0.6} active={menu !== undefined && menu.length === 0} />
       <ul className={cx('menu')}>
         {menuData.map((item, indexmenu) => (
           <MenuItemFakerData key={indexmenu} item={item} />

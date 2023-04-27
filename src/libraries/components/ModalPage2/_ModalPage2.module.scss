@@ -1,0 +1,58 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  position: relative;
+  .list-item {
+    .item {
+      @include flex(center, start, nowrap);
+      color: #717579;
+      font-weight: 500;
+      + .item {
+        margin: 20px 0;
+      }
+      img {
+        margin-right: 20px;
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      }
+    }
+  }
+  .chose-folder {
+    margin-left: 140px;
+    margin-top: 120px;
+    .folder {
+      margin-left: 60px;
+
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 30px;
+      span {
+        color: #255ef1;
+        cursor: pointer;
+      }
+    }
+    .no-access {
+      color: #ff4747;
+      @include flex(center, start, nowrap);
+      svg {
+        color: #ff4747;
+      }
+    }
+  }
+  .button-chose {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    @include flex(center, center, nowrap);
+    font-weight: 500;
+    span {
+      color: #00a2fd;
+      font-size: 2.2rem;
+      font-weight: 500;
+      margin: 0 7px;
+      cursor: pointer;
+    }
+  }
+}
