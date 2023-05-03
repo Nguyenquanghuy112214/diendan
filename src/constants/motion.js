@@ -23,9 +23,9 @@ export const planetVariants = (active) => ({
     overflow: 'hidden',
   },
   show: {
-    height: active ? 'auto' : 0,
-    opacity: active ? 1 : 0,
-    overflow: active ? 'visible' : 'hidden',
+    height: active === true ? 'auto' : 0,
+    opacity: active === true ? 1 : 0,
+    overflow: active === true ? 'visible' : 'hidden',
     transition: {
       type: 'spring',
       duration: 1.2,

@@ -12,8 +12,6 @@ export function Input({ error, touched, readonly, title, onBlur, as, onClick, id
     setActive(false);
     onBlur();
   };
-  console.log('error', error);
-  console.log('touched', touched);
   return (
     <div className={cx('wrapper')}>
       <span className={cx('span')}>{title}: </span>

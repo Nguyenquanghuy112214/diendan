@@ -1,0 +1,100 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  margin-top: $height-header;
+  padding: 30px 24px;
+
+  .list-downloaded {
+    background-color: white;
+    border-radius: 12px;
+    padding: 30px;
+    .title {
+      color: #212121;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .list-select {
+      @include flex(center, start, nowrap);
+      .item {
+        position: relative;
+        margin-right: 30px;
+        margin-bottom: 20px;
+        color: #525256;
+        font-weight: bold;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        &::after {
+          position: absolute;
+          content: '';
+          bottom: -5px;
+          left: 0;
+          height: 2px;
+          width: 0;
+          background-color: #299d91;
+          border-radius: 8px;
+          transition: all 0.3s ease-in-out;
+        }
+        &:hover {
+          color: #299d91;
+        }
+        &:hover::after {
+          width: 100%;
+        }
+      }
+    }
+
+    table {
+      width: 100%;
+      .main-tr {
+        border-radius: 6px;
+        background-color: #f3f6f9;
+        th {
+          height: 43px;
+          padding: 10px;
+          color: #b5b5c3;
+          font-size: 1.6rem;
+        }
+      }
+
+      tr {
+        td {
+          padding: 10px;
+          font-size: 1.6rem;
+          font-weight: 500;
+          color: #464e5f;
+          .name {
+            margin-bottom: 10px;
+            color: #464e5f;
+          }
+
+          .auth {
+            color: #b5b5c3;
+            font-size: 1.5rem;
+          }
+
+          img {
+            width: 17px;
+            height: 17px;
+            object-fit: contain;
+            + img {
+              margin-left: 6px;
+            }
+          }
+        }
+
+        .view-more {
+          text-align: center;
+          div {
+            background-color: #c9f7f5;
+            color: #1bc5bd;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

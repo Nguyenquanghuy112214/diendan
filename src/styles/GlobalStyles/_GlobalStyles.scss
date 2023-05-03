@@ -40,3 +40,44 @@
   width: 100%;
   height: calc(100vh - 240px);
 }
+
+// phan trang
+
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // margin-bottom: 5rem;
+  flex-wrap: wrap;
+  font-size: 1.2rem;
+  gap: 20px 10px;
+}
+
+.page-num {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  background-color: #fff;
+  border: 1px solid #6c757d;
+  font-size: 1.6rem;
+  border-radius: 8px;
+
+  li a {
+    font-size: 1.6rem;
+    color: #6c757d !important;
+  }
+  &:hover {
+    color: #fff;
+    background-color: #6c757d;
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.pagination .active {
+  background-color: #6c757d;
+  color: white;
+}

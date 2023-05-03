@@ -1,0 +1,93 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  margin-top: $height-header;
+  padding: 30px 24px;
+  .list-item {
+    background-color: #ece8e8;
+    border-radius: 15px;
+    padding: 24px 20px;
+    margin-top: 30px;
+    .title-update {
+      padding: 0 40px;
+      @include flex(center, space-between, nowrap);
+      .title {
+        font-size: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .update {
+        color: #2272ea;
+        cursor: pointer;
+      }
+    }
+
+    .wrapper-listitem {
+      //   margin-top: 20px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+  }
+}
+
+// item
+.wrapper-item {
+  background-color: white;
+  border-radius: 8px;
+  @include flex(center, space-between, nowrap);
+  padding: 20px;
+  .content-left {
+    @include flex(center, start, nowrap);
+    .img {
+      margin-right: 10px;
+      @include screen-xl {
+        margin-right: 40px;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+    }
+    .title-auth-date {
+      .title-sub {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #030303;
+        margin-bottom: 20px;
+      }
+      .auth-date {
+        .auth {
+          color: #191919;
+          font-size: 1.4rem;
+          margin-bottom: 6px;
+        }
+
+        .date {
+          color: #191919;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  .content-right {
+    .access-rights {
+      border: 1px solid #299d91;
+      border-radius: 4px;
+      color: #299d91;
+      font-size: 1.4rem;
+      padding: 10px;
+      width: 130px;
+      @include flex(center, space-between, nowrap);
+      //   cursor: pointer;
+      img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+    }
+  }
+}

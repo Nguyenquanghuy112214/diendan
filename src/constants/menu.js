@@ -6,6 +6,7 @@ import upload from '~/assets/img/menu/upload.png';
 import archive from '~/assets/img/menu/archive.png';
 import messages from '~/assets/img/menu/messages.png';
 import settings from '~/assets/img/menu/settings.png';
+import { routePath } from '~/routing/pathRouting';
 
 export const menuData = [
   {
@@ -31,8 +32,8 @@ export const menuHistory = [
     active: true,
 
     children: [
-      { title: 'Học liệu đã tải về', img: download, hiddenMenu: false, children: [] },
-      { title: 'Học liệu đã tải lên', img: upload, hiddenMenu: false, children: [] },
+      { title: 'Học liệu đã tải về', path: routePath.downloadedpage, img: download, hiddenMenu: false, children: [] },
+      { title: 'Học liệu đã tải lên', path: routePath.updatepage, img: upload, hiddenMenu: false, children: [] },
     ],
   },
 ];

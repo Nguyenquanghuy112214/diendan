@@ -17,6 +17,20 @@ const configRoutes = [
     title: 'Chi tiết',
     hiddenMenu: false,
   },
+  {
+    path: routePath.updatepage,
+    element: lazy(() => import('~/pages/UpdatedPage')),
+    icons: '',
+    title: 'Học liệu đã tải lên',
+    hiddenMenu: false,
+  },
+  {
+    path: routePath.downloadedpage,
+    element: lazy(() => import('~/pages/DownloadPage')),
+    icons: '',
+    title: 'Học liệu đã tải lên',
+    hiddenMenu: false,
+  },
 
   // Not Found
   {

@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+// router-dom
+import { useNavigate } from 'react-router-dom';
 // call api
 import * as FetchMenu from '~/utils/fetchapi/FetchMenu';
 // menu
@@ -64,10 +66,12 @@ function Menu() {
 export default Menu;
 
 const MenuItem = ({ item }) => {
+  const naviagte = useNavigate();
   const [itemActive, setItemActive] = useState();
   const [count, setCount] = useState(0);
 
   const handleClick = (item) => {
+    naviagte(item.path);
     if (+item.itemId !== +itemActive && +item.level === 0) {
       setItemActive(item.itemId);
       setCount(count + 1);

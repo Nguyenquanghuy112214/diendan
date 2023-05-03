@@ -1,0 +1,59 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  @include flex(start, space-between, nowrap);
+  flex-direction: column;
+  .title {
+    line-height: 2.4rem;
+    color: #000000;
+    font-weight: 500;
+    span {
+      color: #255ef1;
+    }
+  }
+
+  .wrapper-upload {
+    width: 100%;
+    @include flex(center, center, nowrap);
+    flex-direction: column;
+    .title-upload {
+      color: #676767;
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+    }
+
+    .input-file {
+      padding: 10px;
+      border: 1px solid #e3e3e3;
+      border-radius: 6px;
+      @include flex(center, space-between, nowrap);
+      min-width: 400px;
+      margin-bottom: 80px;
+      font-size: 1.6rem;
+
+      .img {
+        width: 20px;
+        height: 20px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .button {
+      button {
+        min-width: 400px;
+        background-color: #1a8df8;
+        color: white;
+        font-size: 1.6rem;
+        font-weight: bold;
+        height: 45px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+}

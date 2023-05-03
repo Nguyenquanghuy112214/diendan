@@ -45,12 +45,13 @@ h4,
 h5 {
   padding: 0;
   margin: 0;
-  text-transform: capitalize;
+  // text-transform: capitalize;
 }
 
 a {
   text-decoration: none;
   transition: all 0.3s linear;
+  color: #6c757d;
   &:hover {
     color: unset;
   }

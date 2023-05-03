@@ -1,0 +1,33 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  @include flex(start, space-between, nowrap);
+  flex-direction: column;
+  width: 100%;
+  .content-success {
+    padding: 70px 200px;
+    background-color: #ffe6c6;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 50px;
+    br {
+      margin: 20px 0;
+    }
+  }
+  .button {
+    text-align: center;
+    width: 100%;
+    button {
+      min-width: 400px;
+      background-color: #1a8df8;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: bold;
+      height: 45px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  }
+}

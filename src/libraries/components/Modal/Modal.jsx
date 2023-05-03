@@ -2,23 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // motion
 import { motion, AnimatePresence } from 'framer-motion';
-import { staggerContainer } from '~/constants/motion';
+import { staggerContainer, tranformY } from '~/constants/motion';
 // redux
 import useCloseModal from '~/hooks/redux/closemodal/useCloseModal';
+import useOpenModalHelp from '~/hooks/redux/openmodalhelp/useOpenModalHelp';
 // img
 import { imgModal } from '~/assets/img/modal';
 // component
 import ModalPage1 from '../ModalPage1/ModalPage1';
 import ModalPage2 from '../ModalPage2/ModalPage2';
 import ModalPage3 from '../ModalPage3/ModalPage3';
+import ModalPage4 from '../ModalPage4/ModalPage4';
+import ModalPage5 from '../ModalPage5/ModalPage5';
+import ModalPageHelp from '../ModalPageHelp/ModalPageHelp';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_Modal.module.scss';
-import { tranformY } from '~/constants/motion';
 const cx = classNames.bind(styles);
 function Modal() {
   const { isActiveModal, setActiveModal } = useCloseModal();
+  const { isActiveModalHelp, setActiveModalHelp } = useOpenModalHelp();
   const { close, help } = imgModal;
+  console.log('isActiveModal', isActiveModal);
+  console.log('isActiveModalHelp', isActiveModalHelp);
   const tabs = [
     {
       component: <ModalPage1 />,
@@ -29,18 +35,31 @@ function Modal() {
     {
       component: <ModalPage3 />,
     },
+    {
+      component: <ModalPage4 />,
+    },
+    {
+      component: <ModalPage5 />,
+    },
   ];
   const fakeData = 3;
   const closeModal = () => {
     setActiveModal(false);
   };
+  const openModalHelp = () => {
+    setActiveModalHelp(true);
+  };
+  const closeModalHelp = () => {
+    setActiveModalHelp(false);
+  };
   return (
     <AnimatePresence>
-      {isActiveModal && (
+      {/* Modal page */}
+      {isActiveModal && !isActiveModalHelp && (
         <motion.div variants={staggerContainer()} initial="hidden" whileInView="show" exit="exit" className={cx('wrapper')}>
           <motion.div variants={tranformY(0.2, 1, true)} className={cx('wrapper-detail')}>
             <div className={cx('title')}>{fakeData === 3 ? 'Đưa bài giảng lên thư viện' : 'CHỌN LOẠI TÀI LIỆU MUỐN GỬI LÊN'}</div>
-            <span className={cx('help')}>
+            <span onClick={openModalHelp} className={cx('help')}>
               <img src={help} alt="help" />
             </span>
             <span onClick={closeModal} className={cx('img')}>
@@ -48,10 +67,27 @@ function Modal() {
             </span>
             <div className={cx('children')}>
               {tabs.map((tab, index) => {
-                if (index === 2) {
+                if (index === 4) {
                   return <div key={index}>{tab.component}</div>;
                 }
               })}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+      {/* Modal hepler */}
+      {isActiveModalHelp && (
+        <motion.div variants={staggerContainer()} initial="hidden" whileInView="show" exit="exit" className={cx('wrapper')}>
+          <motion.div variants={tranformY(0.2, 1, true)} className={cx('wrapper-detail')}>
+            <div className={cx('title')}>{fakeData === 3 ? 'Đưa bài giảng lên thư viện' : 'CHỌN LOẠI TÀI LIỆU MUỐN GỬI LÊN'}</div>
+            <span className={cx('help')}>
+              <img src={help} alt="help" />
+            </span>
+            <span onClick={closeModalHelp} className={cx('img')}>
+              <img src={close} alt="" />
+            </span>
+            <div className={cx('children')}>
+              <ModalPageHelp />
             </div>
           </motion.div>
         </motion.div>
