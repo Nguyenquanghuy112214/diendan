@@ -31,6 +31,45 @@ const configRoutes = [
     title: 'Học liệu đã tải lên',
     hiddenMenu: false,
   },
+  {
+    path: routePath.introforum,
+    element: lazy(() => import('~/pages/IntrtoForumPage')),
+    icons: '',
+    title: 'Giới thiệu',
+    hiddenMenu: false,
+    layout: 'nonavbar',
+  },
+  {
+    path: routePath.login,
+    element: lazy(() => import('~/pages/LoginPage')),
+    icons: '',
+    title: 'Đăng nhập',
+    hiddenMenu: false,
+    layout: 'nonavbar',
+  },
+  {
+    path: routePath.register,
+    element: lazy(() => import('~/pages/RegisterPage')),
+    icons: '',
+    title: 'Đăng ký',
+    hiddenMenu: false,
+    layout: 'nonavbar',
+  },
+  {
+    path: routePath.forgotpassword,
+    element: lazy(() => import('~/pages/ForgotPasswordPage')),
+    icons: '',
+    title: 'Quên mật khẩu',
+    hiddenMenu: false,
+    layout: 'nonavbar',
+  },
+  {
+    path: routePath.profile,
+    element: lazy(() => import('~/pages/ProfilePage')),
+    icons: '',
+    title: 'Thông tin cá nhân',
+    hiddenMenu: false,
+  },
 
   // Not Found
   {

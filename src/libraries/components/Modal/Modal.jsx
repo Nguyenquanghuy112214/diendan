@@ -67,7 +67,7 @@ function Modal() {
             </span>
             <div className={cx('children')}>
               {tabs.map((tab, index) => {
-                if (index === 4) {
+                if (index === 2) {
                   return <div key={index}>{tab.component}</div>;
                 }
               })}

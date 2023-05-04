@@ -5,14 +5,16 @@
   + .wrapper {
     margin: 30px 0;
   }
-  .span {
-    min-width: 100px;
+  .wrapper-label {
+    .span {
+      min-width: 100px;
+    }
   }
 }
 .wrapper-input {
   flex: 1;
   position: relative;
-  border: 1px solid #8b8989;
+  border: 2px solid #8b8989;
   padding: 0 14px;
   border-radius: 8px;
   margin-left: 30px;
@@ -21,7 +23,7 @@
   transition: all 0.2s linear;
   &:hover {
     box-shadow: 7px 10px 8px 1px rgba(0, 0, 0, 0.1);
-    border: 1px solid #255ef1;
+    border: 2px solid #255ef1;
   }
 
   span {
@@ -70,12 +72,8 @@
   }
 }
 
-.activeInput {
-  // background-color: #eafee2;
-}
-
 .errorInput {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 
 .checkbox {
@@ -83,4 +81,30 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+
+// css theo chiều dọc
+
+.column {
+  @include flex(start, start, nowrap);
+  flex-direction: column;
+  .wrapper-label {
+    margin-bottom: 10px;
+    @include flex(center, space-between, nowrap);
+    width: 100%;
+    .forgot {
+      color: #299d91;
+      cursor: pointer;
+      font-size: 1.7rem;
+    }
+  }
+
+  .wrapper-input {
+    margin-left: 0;
+    min-width: 400px;
+    &:hover {
+      box-shadow: 7px 10px 8px 1px rgba(0, 0, 0, 0.1);
+      border: 2px solid #299d91;
+    }
+  }
 }

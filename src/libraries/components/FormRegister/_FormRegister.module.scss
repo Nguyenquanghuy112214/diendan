@@ -1,0 +1,88 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  position: fixed;
+  left: 56%;
+  top: 2%;
+  width: 500px;
+  background-color: white;
+  border-radius: 25px;
+  .title {
+    text-align: center;
+    margin-top: 35px;
+    color: #191d23;
+    font-size: 3.6rem;
+    font-weight: 500;
+  }
+  .form {
+    padding: 35px;
+
+    .temp-of-service {
+      color: #4b5768;
+      strong {
+        color: #299d91;
+      }
+    }
+    .button {
+      margin-top: 25px;
+      width: 100%;
+      height: 44px;
+      border-radius: 4px;
+      background-color: #299d91;
+      color: white;
+    }
+  }
+}
+
+.wrapper-loginwith {
+  position: relative;
+  height: 110px;
+  .chonse-more {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f5f7;
+    z-index: 2;
+    padding: 14px 20px;
+    color: #999da3;
+  }
+  hr {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
+
+.login-google {
+  width: 100%;
+  @include flex(center, center, nowrap);
+  background-color: #e4e7eb;
+  border-radius: 4px;
+  height: 50px;
+  cursor: pointer;
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 15px;
+  }
+  .continue {
+    color: #4b5768;
+  }
+}
+
+.already {
+  margin-top: 40px;
+  text-align: center;
+  color: #999da3;
+  strong {
+    color: #299d91;
+    cursor: pointer;
+  }
+}

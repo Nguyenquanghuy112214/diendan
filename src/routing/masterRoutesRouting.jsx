@@ -3,26 +3,27 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 // config routes
 import configRoutes from './configRouting';
 // components
-import DefaultLayout from '~/libraries/layouts/LayoutDefault';
+import LayoutDefault from '~/libraries/layouts/LayoutDefault';
+import LayoutNoNavbar from '~/libraries/layouts/LayoutNoNavbar';
 import Loading from '~/libraries/components/AnimationLoading/Animationloading';
 
 export default function MasterRoute() {
   return (
     <Routes>
       {configRoutes.map((route, index) => {
-        let Layout = DefaultLayout;
-        // if (route.layout === 'navigation') {
-        //   Layout = NavigateHeaderLayout;
-        // } else {
-        //   Layout = DefaultLayout;
-        // }
+        let Layout = LayoutDefault;
+        if (route.layout === 'nonavbar') {
+          Layout = LayoutNoNavbar;
+        } else {
+          Layout = LayoutDefault;
+        }
         const Page = route.element;
         return (
           <Route
             path={route.path}
             element={
               <Layout title={route.title}>
-                <Suspense fallback={<Loading active opa={0.6} />}>
+                <Suspense fallback={<Loading />}>
                   <Page />
                 </Suspense>
               </Layout>

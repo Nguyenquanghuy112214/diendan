@@ -1,38 +1,35 @@
 import { useState } from 'react';
 // formik
-import { Field } from 'formik';
+import { Field, useField } from 'formik';
 // css module
 import classNames from 'classnames/bind';
 import styles from './_Input.module.scss';
 const cx = classNames.bind(styles);
 
-export function Input({ error, touched, readonly, title, onBlur, as, onClick, id, type, text, value, placeholder, name, normal }) {
-  const [active, setActive] = useState(undefined);
+export function Input({ forgot, error, touched, title, handleNavigate, onBlur, onClick, type, column, value, placeholder, name, normal }) {
   const handleClick = () => {
-    setActive(false);
     onBlur();
   };
   return (
-    <div className={cx('wrapper')}>
-      <span className={cx('span')}>{title}: </span>
+    <div className={cx('wrapper', column ? 'column' : '')}>
+      <div className={cx('wrapper-label')}>
+        <span className={cx('span')}>{title}</span>
+        {forgot && (
+          <span onClick={() => handleNavigate()} className={cx('forgot')}>
+            Forgot Password?
+          </span>
+        )}
+      </div>
       {!normal && (
         <div
           onClick={() => onClick()}
           onBlur={() => handleClick()}
-          onFocus={() => setActive(true)}
-          className={cx('wrapper-input', `${active ? 'activeInput' : ''}`, `${error ? 'errorInput' : ''}`)}
+          className={cx('wrapper-input', `${error && touched ? 'errorInput' : ''}`)}
         >
-          <Field
-            readOnly={readonly ? true : false}
-            as={as}
-            id={id}
-            type={type}
-            value={value}
-            placeholder={error && touched ? error : placeholder}
-            name={name}
-          />
+          <Field type={type} value={value} placeholder={error && touched ? error : placeholder} name={name} />
         </div>
       )}
+
       {normal && <input className={cx('checkbox')} type={type} />}
     </div>
   );

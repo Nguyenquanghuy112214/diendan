@@ -1,0 +1,57 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  @include flex(center, space-between, nowrap);
+  .logo {
+    color: #113c49;
+    font-size: 3rem;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    img {
+      border-radius: 10px;
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      position: absolute;
+      top: -6%;
+      left: -13%;
+      z-index: -1;
+    }
+  }
+
+  .menu {
+    @include flex(center, space-between, nowrap);
+
+    .item {
+      position: relative;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &::after {
+        position: absolute;
+        content: '';
+        bottom: -4px;
+        left: 0px;
+        width: 0%;
+        height: 2px;
+        border-radius: 20px;
+        background-color: #299d91;
+        transition: all 0.3s ease-in-out;
+      }
+      &:hover {
+        color: #299d91;
+      }
+      &:hover::after {
+        width: 100%;
+      }
+      + .item {
+        margin-left: 50px;
+      }
+    }
+    .wrapper-button {
+      margin-left: 70px;
+    }
+  }
+}

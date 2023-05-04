@@ -74,6 +74,29 @@ export const tranformY = (delay, duration, top) => ({
   },
 });
 
+export const tranformX = (delay, duration, left) => ({
+  hidden: {
+    opacity: 0,
+
+    x: !left ? '50%' : '-30%',
+  },
+  show: {
+    opacity: 1,
+    x: 0,
+
+    transition: {
+      type: 'spring',
+      delay,
+      duration,
+      ease: 'easeOut',
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: !left ? '50%' : '-50',
+  },
+});
+
 export const textContainer = (time) => ({
   hidden: {
     opacity: 0,

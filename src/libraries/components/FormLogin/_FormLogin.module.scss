@@ -1,0 +1,160 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  position: fixed;
+  left: 56%;
+  top: 5%;
+  width: 500px;
+  background-color: white;
+  border-radius: 25px;
+  .title {
+    text-align: center;
+    margin-top: 50px;
+    color: #191d23;
+    font-size: 3.6rem;
+    font-weight: 500;
+  }
+  .form {
+    padding: 50px;
+
+    .save {
+      @include flex(center, start, nowrap);
+
+      .container {
+        @include flex(center, start, nowrap);
+        position: relative;
+        padding-left: 35px;
+        border-radius: 6px;
+
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      /* Hide the browser's default checkbox */
+      .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      /* Create a custom checkbox */
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 3px;
+        transition: all 0.3s linear;
+      }
+      /* On mouse-over, add a grey background color */
+      .container:hover input ~ .checkmark {
+        background-color: #ccc;
+      }
+
+      /* When the checkbox is checked, add a blue background */
+      .container input:checked ~ .checkmark {
+        background-color: #299d91;
+      }
+      .container input:checked ~ .checkmark-res {
+        background-color: #299d91;
+      }
+
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+        content: '';
+        position: absolute;
+        display: none;
+      }
+
+      /* Show the checkmark when checked */
+      .container input:checked ~ .checkmark:after {
+        display: block;
+      }
+
+      /* Style the checkmark/indicator */
+      .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      span {
+        font-size: 1.8rem;
+        color: #0148ff;
+        font-weight: 400;
+      }
+    }
+
+    .button {
+      margin-top: 30px;
+      width: 100%;
+      height: 44px;
+      border-radius: 4px;
+      background-color: #299d91;
+      color: white;
+    }
+  }
+}
+
+.wrapper-loginwith {
+  position: relative;
+  height: 120px;
+  .chonse-more {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f5f7;
+    z-index: 2;
+    padding: 14px 20px;
+    color: #999da3;
+  }
+  hr {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
+
+.login-google {
+  width: 100%;
+  @include flex(center, center, nowrap);
+  background-color: #e4e7eb;
+  border-radius: 4px;
+  height: 50px;
+  cursor: pointer;
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 15px;
+  }
+  .continue {
+    color: #4b5768;
+  }
+}
+
+.create {
+  margin-top: 40px;
+  color: #299d91;
+  text-align: center;
+  cursor: pointer;
+}

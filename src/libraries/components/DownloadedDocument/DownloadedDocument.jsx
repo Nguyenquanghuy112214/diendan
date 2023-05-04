@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // img
 import { imgDownloaded } from '~/assets/img/downloadedpage';
+// phan trang
+import Paginated from '../Paginated/Paginated';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_DownloadedDocument.module.scss';
-import Paginated from '../Paginated/Paginated';
 const cx = classNames.bind(styles);
 function DownloadedDocument(props) {
   const { star } = imgDownloaded;
