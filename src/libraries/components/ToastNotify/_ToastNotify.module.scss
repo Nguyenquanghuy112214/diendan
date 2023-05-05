@@ -1,0 +1,62 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 160px;
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 40px 30px;
+  @include flex(start, start, nowrap);
+
+  .content {
+    @include flex(start, start, nowrap);
+    flex-direction: column;
+    .main-content {
+      color: #0a1811;
+      font-weight: bold;
+      margin-bottom: 14px;
+      font-size: 2rem;
+    }
+
+    .sub-content {
+      line-height: 24px;
+    }
+  }
+
+  .icon {
+    img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      margin-right: 30px;
+    }
+  }
+  .close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+
+    svg {
+      font-size: 3.4rem;
+      cursor: pointer;
+    }
+  }
+}
+
+.success {
+  background-color: #5cd3e9;
+}
+.fail {
+  background-color: #ffd38a;
+}
+.existemail {
+  background-color: #f6a7a3;
+}
+.existname {
+  background-color: #f6a7a3;
+}

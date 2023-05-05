@@ -105,6 +105,10 @@
       border-radius: 4px;
       background-color: #299d91;
       color: white;
+      transition: all 0.3s ease;
+      &:hover {
+        box-shadow: 5px 10px 10px 2px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 }
@@ -141,6 +145,10 @@
   border-radius: 4px;
   height: 50px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.1);
+  }
   img {
     width: 30px;
     height: 30px;

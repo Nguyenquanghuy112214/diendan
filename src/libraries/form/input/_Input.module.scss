@@ -8,6 +8,7 @@
   .wrapper-label {
     .span {
       min-width: 100px;
+      line-height: 22px;
     }
   }
 }
@@ -107,4 +108,8 @@
       border: 2px solid #299d91;
     }
   }
+}
+
+.span-error {
+  color: red;
 }

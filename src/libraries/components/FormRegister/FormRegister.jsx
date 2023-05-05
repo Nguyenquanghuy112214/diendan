@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // router
 import { useNavigate } from 'react-router-dom';
 import { routePath } from '~/routing/pathRouting';
+// call api
+import * as Register from '~/utils/postapi/Register';
 // component
 import { Input } from '~/libraries/form/input/Input';
+import ToastNotify from '../ToastNotify/ToastNotify';
 // img
 import { imgRegister } from '~/assets/img/register';
 // formik
@@ -18,22 +21,50 @@ const cx = classNames.bind(styles);
 function FormRegister(props) {
   const { google } = imgRegister;
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
   const handleNavigate = () => {
     navigate(routePath.login);
   };
-  const handleSubmit = () => {};
+  const handleSubmit = async (values) => {
+    const dataRegister = await Register.register(values);
+    console.log('dataRegister', dataRegister);
+    setData(dataRegister);
+  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setData(null);
+    }, [4000]);
+    return () => clearTimeout(timer);
+  }, [data]);
+
+  const closeToast = () => {
+    setData(null);
+  };
 
   return (
     <Formik
       initialValues={{
-        name: '',
-        email: '',
-        password: '',
+        UserName: '',
+        Email: '',
+        Password: '',
+        ComfirmPass: '',
       }}
       validationSchema={Yup.object({
-        name: Yup.string().required('Vui lòng nhập tên'),
-        email: Yup.string().required('Vui lòng nhập email'),
-        password: Yup.string().required('Vui lòng nhập password'),
+        UserName: Yup.string()
+          .matches(/^[a-zA-Z0-9]+$/, 'Vui lòng không nhập kí tự đặc biệt hoặc khoảng trắng')
+          .min(5, 'Vui lòng nhập ít nhất 5 ký tự')
+          .max(14, 'Vui lòng không nhập quá 14 ký tự')
+          .required('Vui lòng nhập tên đăng nhập'),
+        Email: Yup.string().required('Vui lòng nhập email'),
+        Password: Yup.string()
+          .matches(/^[a-zA-Z0-9]+$/, 'Vui lòng không nhập kí tự đặc biệt hoặc khoảng trắng')
+          .min(5, 'Vui lòng nhập ít nhất 5 ký tự')
+          .max(11, 'Vui lòng không nhập quá 11 ký tự')
+          .matches(/(?=(.*[0-9]))(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{5,}/, 'Nhập ít nhất 1 số, 1 chữ thường, 1 chữ hoa')
+          .required('Vui lòng nhập mật khẩu'),
+        ComfirmPass: Yup.string()
+          .oneOf([Yup.ref('Password'), null], 'Mật khẩu chưa trùng khớp')
+          .required('Vui lòng xác nhận mật khẩu'),
       })}
       onSubmit={handleSubmit}
     >
@@ -42,33 +73,57 @@ function FormRegister(props) {
         return (
           <Form>
             <div className={cx('wrapper', 'animationscroll')}>
+              <ToastNotify
+                onClick={closeToast}
+                active={data !== null && data.success !== null && data.success === false}
+                existname
+                title="Lỗi đăng ký !"
+                subtitle={data !== null && data.message !== null && data.message}
+              />
+              <ToastNotify
+                onClick={closeToast}
+                active={data !== null && data.success !== null && data.success === true}
+                title="Tạo tài khoản thành công !"
+                subtitle={data !== null && data.message !== null && data.message}
+                success
+              />
+
               <div className={cx('title')}>Create an account</div>
               <div className={cx('form')}>
                 <Input
                   type="text"
-                  name="name"
+                  name="UserName"
                   title="Name"
-                  placeholder="Nguyễn Quang Huy"
-                  error={errors.name}
-                  touched={touched.name}
+                  placeholder="nguyenquanghuy2000"
+                  error={errors.UserName}
+                  touched={touched.UserName}
                   column
                 />
                 <Input
                   type="email"
-                  name="email"
+                  name="Email"
                   title="Email Address"
                   placeholder="bkt@gmail.com"
-                  error={errors.email}
-                  touched={touched.email}
+                  error={errors.Email}
+                  touched={touched.Email}
                   column
                 />
                 <Input
                   type="password"
-                  name="password"
+                  name="Password"
                   title="Password"
                   placeholder="*****************"
-                  error={errors.password}
-                  touched={touched.password}
+                  error={errors.Password}
+                  touched={touched.Password}
+                  column
+                />
+                <Input
+                  type="password"
+                  name="ComfirmPass"
+                  title="Comfirm Password"
+                  placeholder="*****************"
+                  error={errors.ComfirmPass}
+                  touched={touched.ComfirmPass}
                   column
                 />
                 <div className={cx('temp-of-service')}>

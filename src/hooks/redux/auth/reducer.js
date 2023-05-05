@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import localStorageUtils, { KeyStorage } from 'utils/local-storage.utils';
+import localStorageUtils, { KeyStorage } from '~/utils/local-storage';
 
 const localAuth = localStorageUtils.getObject(KeyStorage.AUTH) || null;
 

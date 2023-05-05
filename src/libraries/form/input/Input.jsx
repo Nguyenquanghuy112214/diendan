@@ -13,7 +13,12 @@ export function Input({ forgot, error, touched, title, handleNavigate, onBlur, o
   return (
     <div className={cx('wrapper', column ? 'column' : '')}>
       <div className={cx('wrapper-label')}>
-        <span className={cx('span')}>{title}</span>
+        {error && touched && column ? (
+          <span className={cx('span', 'span-error')}>{error}</span>
+        ) : (
+          <span className={cx('span')}>{title}</span>
+        )}
+
         {forgot && (
           <span onClick={() => handleNavigate()} className={cx('forgot')}>
             Forgot Password?
@@ -26,7 +31,7 @@ export function Input({ forgot, error, touched, title, handleNavigate, onBlur, o
           onBlur={() => handleClick()}
           className={cx('wrapper-input', `${error && touched ? 'errorInput' : ''}`)}
         >
-          <Field type={type} value={value} placeholder={error && touched ? error : placeholder} name={name} />
+          <Field type={type} value={value} placeholder={error && touched && !column ? error : placeholder} name={name} />
         </div>
       )}
 

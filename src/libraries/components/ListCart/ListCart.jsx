@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+// call api
+import * as FetchThong_Ke from '~/utils/fetchapi/FetchThong_Ke';
 // components
 import AnimationNumbers from '../AnimationNumbers/AnimationNumbers';
 // thu vien bieu do tron
@@ -10,6 +12,13 @@ import classNames from 'classnames/bind';
 import styles from './_ListCart.module.scss';
 const cx = classNames.bind(styles);
 function ListCart(props) {
+  useEffect(() => {
+    const fetch = async () => {
+      const dataThongKe = await FetchThong_Ke.fetchThong_Ke();
+      console.log('dataThongKe', dataThongKe);
+    };
+    fetch();
+  }, []);
   return (
     <div className={cx('wrapper')}>
       <CartItem valuecircle1={40} valuecircle2={60} colorbg="#63D1D1" colorcircle="#82DADA" value={1542} title="Bài giảng trực tuyến" />

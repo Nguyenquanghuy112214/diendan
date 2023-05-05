@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// call api
+import * as Login from '~/utils/postapi/Login';
 // component
 import { Input } from '~/libraries/form/input/Input';
+import Loading from '../AnimationLoading/Animationloading';
+// hook
+import useAuth from '~/hooks/redux/auth/useAuth';
 // img
 import { imgRegister } from '~/assets/img/register';
 // router
@@ -13,10 +18,14 @@ import * as Yup from 'yup';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_FormLogin.module.scss';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 function FormLogin(props) {
   const { google } = imgRegister;
+  const { auth, setAuth } = useAuth();
+  console.log('auth', auth);
   const navigate = useNavigate();
+
   const handleNavigate = () => {
     navigate(routePath.register);
   };
@@ -24,16 +33,29 @@ function FormLogin(props) {
     navigate(routePath.forgotpassword);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (values) => {
+    const dataLogin = await Login.login(values);
+    setAuth(dataLogin.data);
+  };
+  useEffect(() => {
+    if (auth) {
+      navigate(routePath.dashboardpage);
+    }
+  }, [auth]);
   return (
     <Formik
       initialValues={{
-        email: '',
-        password: '',
+        Email: '',
+        Password: '',
       }}
       validationSchema={Yup.object({
-        email: Yup.string().required('Vui lòng nhập email'),
-        password: Yup.string().required('Vui lòng nhập password'),
+        Email: Yup.string().required('Vui lòng nhập email'),
+        Password: Yup.string()
+          .matches(/^[a-zA-Z0-9]+$/, 'Vui lòng không nhập kí tự đặc biệt hoặc khoảng trắng')
+          .min(5, 'Vui lòng nhập ít nhất 5 ký tự')
+          .max(11, 'Vui lòng không nhập quá 11 ký tự')
+          .matches(/(?=(.*[0-9]))(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{5,}/, 'Nhập ít nhất 1 số, 1 chữ thường, 1 chữ hoa')
+          .required('Vui lòng nhập mật khẩu mới'),
       })}
       onSubmit={handleSubmit}
     >
@@ -42,24 +64,25 @@ function FormLogin(props) {
         return (
           <Form>
             <div className={cx('wrapper', 'animationscroll')}>
+              <Loading />
               <div className={cx('title')}>Login</div>
               <div className={cx('form')}>
                 <Input
                   type="email"
-                  name="email"
+                  name="Email"
                   title="Email Address"
                   placeholder="bkt@gmail.com"
-                  error={errors.email}
-                  touched={touched.email}
+                  error={errors.Email}
+                  touched={touched.Email}
                   column
                 />
                 <Input
                   type="password"
-                  name="password"
+                  name="Password"
                   title="Password"
                   placeholder="*****************"
-                  error={errors.password}
-                  touched={touched.password}
+                  error={errors.Password}
+                  touched={touched.Password}
                   column
                   forgot
                   handleNavigate={handleForgot}
