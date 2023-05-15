@@ -38,8 +38,8 @@ function FormLogin(props) {
     setAuth(dataLogin.data);
   };
   useEffect(() => {
-    if (auth) {
-      navigate(routePath.dashboardpage);
+    if (auth !== undefined && auth.length > 0) {
+      // navigate(routePath.dashboardpage);
     }
   }, [auth]);
   return (

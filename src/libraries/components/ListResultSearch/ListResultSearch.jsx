@@ -1,36 +1,77 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 //
 import { useNavigate } from 'react-router-dom';
 import { routePath } from '~/routing/pathRouting';
+
 // reacticon
 import { AiFillEye } from 'react-icons/ai';
 // redux
 import useCloseModal from '~/hooks/redux/closemodal/useCloseModal';
 // img
 import { imgListDataSearch } from '~/assets/img/listdatasearch';
+// hook
+import useSelectLesson from '~/hooks/redux/selectIdForGetLesson/useSelectLesson';
 // thu vien animation
 import { motion } from 'framer-motion';
 // animation
 import { staggerContainer, opacity } from '~/constants/motion';
+// call api
+import * as FetchLessonByPre from '~/utils/fetchapi/FetchLessonByPre';
+import * as FetchLessonByIdLecture from '~/utils/fetchapi/FetchLessonByIdLecture';
+import * as FetchLessonNoCategory from '~/utils/fetchapi/FetchLessonNoCategory';
+// date
+import 'moment/locale/vi';
+import moment from 'moment';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_ListResultSearch.module.scss';
+import Loading from '../AnimationLoading/Animationloading';
 const cx = classNames.bind(styles);
 
 function ListResultSearch() {
+  const { idLectureCategory, idContainer } = useSelectLesson();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const fetch = async () => {
+    const dataLesson = await FetchLessonByPre.fetchLessonByPre(idContainer);
+    setData(dataLesson.data);
+  };
+  const fetch2 = async () => {
+    const dataLesson = await FetchLessonByIdLecture.FetchLessonByIdLecture(idLectureCategory);
+    setData(dataLesson.data);
+  };
+
+  const fetch3 = async () => {
+    const test = [];
+    const [data1, data2, data3] = await Promise.all([
+      FetchLessonNoCategory.FetchLessonNoCategory('ForumLectureItem'),
+      FetchLessonNoCategory.FetchLessonNoCategory('ForumLessonPlanItem'),
+      FetchLessonNoCategory.FetchLessonNoCategory('ForumExamsAndTestsItem'),
+    ]);
+    test.push(data1.data, data2.data, data3.data);
+    setData(test);
+  };
+
+  useEffect(() => {
+    if (idLectureCategory === false && idContainer !== false) {
+      fetch();
+    } else if (idLectureCategory !== false) {
+      fetch2();
+    } else if ((idLectureCategory === false, idContainer === false)) {
+      fetch3();
+    }
+  }, [idContainer, idLectureCategory]);
+
   return (
     <div className={cx('wrapper')}>
+      <Loading active={loading === true} />
       <div className={cx('wrapper2')}>
         <div className={cx('title')}>Thư viện Tài Liệu</div>
         <div className={cx('list')}>
-          <ListRusult />
-          <ListRusult />
-          <ListRusult />
-          <ListRusult />
-          <ListRusult />
-          <ListRusult />
-          <ListRusult />
+          {data?.map((item, index) => (
+            <ListRusult item={item} key={index} />
+          ))}
         </div>
       </div>
     </div>
@@ -39,11 +80,12 @@ function ListResultSearch() {
 
 ListResultSearch.propTypes = {};
 
-const ListRusult = () => {
+const ListRusult = ({ item }) => {
   const { setActiveModal } = useCloseModal();
   const postDocument = () => {
     setActiveModal(true);
   };
+  if (!item) return null;
   return (
     <motion.div
       variants={staggerContainer()}
@@ -53,23 +95,22 @@ const ListRusult = () => {
       className={cx('wrapper-listresult')}
     >
       <motion.div variants={opacity(0.1, 1)} className={cx('wrapper-title')}>
-        <div className={cx('title-listime')}>MẦM NON (10000 Bài)</div>
+        <div className={cx('title-listime')}>{item?.lectureCategory || item?.examsAndTestsCategory || item?.lessonPlanCategory}</div>
         <div className={cx('wrapper-nivigate')}>
           <span>Xem tất cả</span> | <span onClick={postDocument}>Đưa bài giảng lên</span>
         </div>
       </motion.div>
       <motion.div variants={opacity(0.2, 1)} className={cx('wrapper-list')}>
-        <ItemResule />
-        <ItemResule />
-        <ItemResule />
-        <ItemResule />
-        <ItemResule />
+        {item?.lectureItems?.map((item, index) => (
+          <ItemResule key={index} item={item} />
+        ))}
       </motion.div>
     </motion.div>
   );
 };
 
-const ItemResule = () => {
+const ItemResule = ({ item }) => {
+  moment.locale('vi');
   const { bgitem } = imgListDataSearch;
   const navigate = useNavigate();
   const handleClick = () => {
@@ -81,17 +122,17 @@ const ItemResule = () => {
         <img src={bgitem} alt="" />
       </div>
       <div className={cx('view')}>
-        1200
+        {item?.numberOfViews}
         <AiFillEye />
       </div>
       <div className={cx('body')}>
         <div onClick={handleClick} className={cx('title-item')}>
-          Toán lớp 1 _ Bài 1
+          {item?.title}
         </div>
-        <div className={cx('described')}>Phép cộng phậm vi 100</div>
+        <div className={cx('described')}>{item?.description}</div>
         <div className={cx('auth-time')}>
           <span>Quang Huy</span>
-          <span>9/25/2015</span>
+          <span>{moment(item?.createdOnDate).format('Do-MM-YYYY')}</span>
         </div>
       </div>
     </div>

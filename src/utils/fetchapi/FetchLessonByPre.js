@@ -1,8 +1,8 @@
 import ApiUtils from '~/utils/api/api';
 
-export const fetchTreeFolder = async (url) => {
+export const fetchLessonByPre = async (idContailler) => {
   try {
-    const res = await ApiUtils.fetch(`/api/${url}/TreeFolder`);
+    const res = await ApiUtils.fetch(`/api/${idContailler}/GetByPre`);
     return res.data;
   } catch (error) {
     console.log('error', error);

@@ -1,5 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+//
+import { Interweave } from 'interweave';
+// call Api
+import * as FetchNews from '~/utils/fetchapi/FetchNews';
 // animation
 import { motion } from 'framer-motion';
 import { staggerContainer, zoomIn } from '~/constants/motion';
@@ -14,35 +19,46 @@ import styles from './_NewsContent.module.scss';
 const cx = classNames.bind(styles);
 function NewsContent() {
   const { new1, new2, new3, new4 } = imgNews;
+  const [dataNews, setData] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const dataNews = await FetchNews.fetchNews();
+      setData(dataNews.data);
+    };
+    fetch();
+  }, []);
   const data = [
     {
       id: 1,
       img: new1,
-      title: 'Tin 1',
+      title: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].title !== undefined && dataNews[0].title,
+      content: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].content !== undefined && dataNews[0].content,
       bgcolor: '#F88C3D',
       delay: 1.6,
     },
     {
       id: 2,
       img: new2,
-      title: 'Tin2',
+      title: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].title !== undefined && dataNews[1].title,
+      content: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].content !== undefined && dataNews[1].content,
       bgcolor: '#9A3BE5',
       delay: 1.8,
     },
     {
       id: 3,
       img: new3,
-      title: 'Tin 3',
+      title: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].title !== undefined && dataNews[2].title,
+      content: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].content !== undefined && dataNews[2].content,
       bgcolor: '#2CB9A7',
       delay: 1.2,
     },
-    {
-      id: 4,
-      img: new4,
-      title: 'Tin 4',
-      bgcolor: '#1F94A5',
-      delay: 1.4,
-    },
+    // {
+    //   id: 4,
+    //   img: new4,
+    //   title: 'Tin 4',
+    //   bgcolor: '#1F94A5',
+    //   delay: 1.4,
+    // },
   ];
   return (
     <div className={cx('wrapper')}>
@@ -59,7 +75,17 @@ function NewsContent() {
         className={cx('wrapper-list-news')}
       >
         {data.map((item, index) => {
-          return <NewItem key={index} delay={item.delay} img={item.img} title={item.title} id={item.id} bgcolor={item.bgcolor} />;
+          return (
+            <NewItem
+              key={index}
+              delay={item.delay}
+              img={item.img}
+              title={item.title}
+              id={item.id}
+              bgcolor={item.bgcolor}
+              content={item.content}
+            />
+          );
         })}
       </motion.div>
       <motion.div
@@ -75,7 +101,7 @@ function NewsContent() {
   );
 }
 
-const NewItem = ({ img, title, bgcolor, id, delay }) => {
+const NewItem = ({ img, title, bgcolor, id, delay, content }) => {
   return (
     <motion.div
       variants={zoomIn(delay - 1.2, 1)}
@@ -87,10 +113,7 @@ const NewItem = ({ img, title, bgcolor, id, delay }) => {
         {title}
       </div>
       <div className={cx('describe')}>
-        Nos collaborateurs, experts des moteurs de recherche Google et Bing disposent des meilleurs atouts pour vos campagnes search. Nous
-        vous accompagnons et aidons à tirer le meilleur des nouveaux algorithmes, de l’automation mais aussi de l’IA Une expertise axée sur
-        le pilotage à la performance de vos campagnes, une structure adaptée à votre business modèle, un suivi régulier de vos performances
-        et leur bonne santé et enfin une méthodologie de test and learn constante afin de fournir des performances qui durent dans le temps.
+        <Interweave content={content} />
       </div>
     </motion.div>
   );

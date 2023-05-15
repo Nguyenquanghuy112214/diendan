@@ -1,6 +1,10 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+// call api
+import * as FetchDetaiDocument from '~/utils/fetchapi/FetchDetaiDocument';
+// router
+import { useParams } from 'react-router-dom';
 // img
 import { imgDetailPage } from '~/assets/img/detailpage';
 // components
@@ -12,6 +16,7 @@ import classNames from 'classnames/bind';
 import styles from './_DetailBook.module.scss';
 const cx = classNames.bind(styles);
 function DetailBook() {
+  const { title, namelv0, namelv1, namelv2, iditem, idforum } = useParams();
   const { book, star, img1, img2, img3 } = imgDetailPage;
   const data = [
     {
@@ -39,13 +44,20 @@ function DetailBook() {
       sub: 'Life begins at the end of your comfort zone.',
     },
   ];
+  useEffect(() => {
+    const fetch = async () => {
+      const dataDetail = await FetchDetaiDocument.FetchDetaiDocument(idforum, iditem);
+      console.log('dataDetail', dataDetail);
+    };
+    fetch();
+  }, [iditem]);
   const start = [1, 1, 1, 1, 1];
   return (
     <div className={cx('wrapper')}>
       {/*  */}
       <div className={cx('wrapper-title')}>
         <div className={cx('title-navigation')}>
-          Bài giảng {'>'} TIỂU HỌC {'>'} Bộ Sách Cánh Diều {'>'} Lớp 2 {'>'} Tiếng Anh
+          {title} {'>'} {namelv0} {'>'} {namelv1} {'>'} {namelv2}
         </div>
         <div className={cx('title-post')}>Đưa bài giảng lên</div>
       </div>

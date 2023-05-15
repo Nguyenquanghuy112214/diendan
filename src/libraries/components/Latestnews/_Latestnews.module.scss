@@ -1,0 +1,54 @@
+@import '../../../styles/Variable/index';
+
+.wrapper {
+  margin-top: 90px;
+  padding-left: 50px;
+
+  .latest-news {
+    font-size: 5rem;
+    margin-bottom: 20px;
+  }
+
+  .list-news {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 60px 30px;
+    .wrapper-item {
+      .img {
+        width: 100%;
+        height: 200px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 14px;
+          object-fit: contain;
+        }
+      }
+
+      .wrapper-cate-date {
+        @include flex(center, start, nowrap);
+        margin: 20px 0;
+
+        .cate {
+          color: #0a2640;
+          font-size: 1.6rem;
+          margin-right: 14px;
+        }
+        .date {
+          color: #777777;
+          font-size: 1.6rem;
+        }
+      }
+      .description {
+        font-size: 2.4rem;
+        line-height: 24px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+      }
+    }
+  }
+}

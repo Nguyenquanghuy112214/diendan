@@ -23,8 +23,6 @@ function Modal() {
   const { isActiveModal, setActiveModal } = useCloseModal();
   const { isActiveModalHelp, setActiveModalHelp } = useOpenModalHelp();
   const { close, help } = imgModal;
-  console.log('isActiveModal', isActiveModal);
-  console.log('isActiveModalHelp', isActiveModalHelp);
   const tabs = [
     {
       component: <ModalPage1 />,

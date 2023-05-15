@@ -1,6 +1,6 @@
 export const routePath = {
   dashboardpage: '/',
-  detaildocument: '/detaildocument',
+  detaildocument: '/detaildocument/:idforum/:title/:namelv0/:namelv1/:namelv2/:iditem',
   updatepage: '/updatepage',
   downloadedpage: '/downloadedpage',
   introforum: '/introforum',
@@ -8,4 +8,6 @@ export const routePath = {
   register: '/register',
   forgotpassword: '/forgotpassword',
   profile: '/profile',
+  news: '/news',
+  newsdetailpage: '/newsdetailpage',
 };

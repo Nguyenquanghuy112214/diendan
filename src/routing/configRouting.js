@@ -70,6 +70,20 @@ const configRoutes = [
     title: 'Thông tin cá nhân',
     hiddenMenu: false,
   },
+  {
+    path: routePath.news,
+    element: lazy(() => import('~/pages/NewsPage')),
+    icons: '',
+    title: 'Tin tức',
+    hiddenMenu: false,
+  },
+  {
+    path: routePath.newsdetailpage,
+    element: lazy(() => import('~/pages/NewsDetailPage')),
+    icons: '',
+    title: 'Tin tức chi tiết',
+    hiddenMenu: false,
+  },
 
   // Not Found
   {

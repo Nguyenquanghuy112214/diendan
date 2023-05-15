@@ -15,7 +15,6 @@ function ListCart(props) {
   useEffect(() => {
     const fetch = async () => {
       const dataThongKe = await FetchThong_Ke.fetchThong_Ke();
-      console.log('dataThongKe', dataThongKe);
     };
     fetch();
   }, []);
