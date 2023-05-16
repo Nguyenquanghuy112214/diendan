@@ -28,12 +28,15 @@ import classNames from 'classnames/bind';
 import styles from './_ListResultSearch.module.scss';
 import Loading from '../AnimationLoading/Animationloading';
 import useSelectMenu from '~/hooks/redux/selectmenu/useSelectMenu';
+import useArrayMenu from '~/hooks/redux/arraymenu/useArrayMenu';
+import { forEach } from 'lodash';
 const cx = classNames.bind(styles);
 
 function ListResultSearch() {
   const { idLectureCategory, idContainer } = useSelectLesson();
+  const { arraymenu, setArrayMenu } = useArrayMenu();
   const [data, setData] = useState([]);
-  console.log('data', data);
+  console.log('arraymenu', arraymenu);
   const [loading, setLoading] = useState(false);
   const fetch = async () => {
     const dataLesson = await FetchLessonByPre.fetchLessonByPre(idContainer);
@@ -45,14 +48,18 @@ function ListResultSearch() {
   };
 
   const fetch3 = async () => {
-    const test = [];
-    const [data1, data2, data3] = await Promise.all([
-      FetchLessonNoCategory.FetchLessonNoCategory('ForumLectureItem'),
-      FetchLessonNoCategory.FetchLessonNoCategory('ForumLessonPlanItem'),
-      FetchLessonNoCategory.FetchLessonNoCategory('ForumExamsAndTestsItem'),
-    ]);
-    test.push(data1.data, data2.data, data3.data);
-    setData(test);
+    const length = arraymenu.length;
+    var i = 0;
+    const dataLv0 = [];
+    for (i = 0; i < length; i++) {
+      const dataItemLv0 = await FetchLessonNoCategory.FetchLessonNoCategory(arraymenu[i].idController);
+      dataLv0.push({
+        lectureCategory: `Thư viện ${arraymenu[i].title} `,
+        lectureItems: [...dataItemLv0.data],
+      });
+    }
+
+    setData(dataLv0);
   };
 
   useEffect(() => {
@@ -60,7 +67,7 @@ function ListResultSearch() {
       fetch();
     } else if (idLectureCategory !== false) {
       fetch2();
-    } else if ((idLectureCategory === false, idContainer === false)) {
+    } else if (idLectureCategory === false && idContainer === false) {
       fetch3();
     }
   }, [idContainer, idLectureCategory]);

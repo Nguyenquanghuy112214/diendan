@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 // hook
 import useSelectMenu from '~/hooks/redux/selectmenu/useSelectMenu';
 import useSelectLesson from '~/hooks/redux/selectIdForGetLesson/useSelectLesson';
+import useArrayMenu from '~/hooks/redux/arraymenu/useArrayMenu';
+
 // call api
 import * as FetchMenu from '~/utils/fetchapi/FetchMenu';
 import * as FetchTreeFolder from '~/utils/fetchapi/FetchTreeFolder';
@@ -22,14 +24,15 @@ import classNames from 'classnames/bind';
 import styles from './_Menu.module.scss';
 const cx = classNames.bind(styles);
 function Menu() {
-  const { idForum, setActiveModalHelp } = useSelectMenu();
+  const { idForum } = useSelectMenu();
+  const { setArrayMenu } = useArrayMenu();
   const [menu, setMenu] = useState([]);
   const [menuTree, setMenuTree] = useState([]);
-  // console.log('menuId', menuId);
   // Call API
   useEffect(() => {
     const fetch = async () => {
       const menuFetch = await FetchMenu.fetchMenu();
+      setArrayMenu(menuFetch);
       setMenu([
         {
           title: 'Danh mục',
@@ -41,7 +44,7 @@ function Menu() {
     };
     fetch();
   }, []);
-
+  console.log('idForum', idForum);
   useEffect(() => {
     const fetch = async () => {
       const dataMenuTree = await FetchTreeFolder.fetchTreeFolder(idForum);
@@ -55,7 +58,11 @@ function Menu() {
         },
       ]);
     };
+
     fetch();
+    if (idForum === null) {
+      setMenuTree([]);
+    }
   }, [idForum]);
 
   return (

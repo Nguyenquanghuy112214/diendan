@@ -21,7 +21,6 @@ const cx = classNames.bind(styles);
 function NewsContent() {
   const { new1, new2, new3, new4 } = imgNews;
   const [dataNews, setData] = useState([]);
-  console.log('dataNews', dataNews);
   useEffect(() => {
     const fetch = async () => {
       const dataNews = await FetchNews.fetchNews();
@@ -108,7 +107,6 @@ function NewsContent() {
 }
 
 const NewItem = ({ img, title, bgcolor, id, delay, description, fakeid }) => {
-  console.log('description', description);
   const navigate = useNavigate();
   const handleNextPage = () => {
     navigate(`/news/${id}`);

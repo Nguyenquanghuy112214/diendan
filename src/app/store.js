@@ -7,6 +7,7 @@ import activeModalHelp from '~/hooks/redux/openmodalhelp/reducer';
 import auth from '~/hooks/redux/auth/reducer';
 import selectMenu from '~/hooks/redux/selectmenu/reducer';
 import selectLesson from '~/hooks/redux/selectIdForGetLesson/reducer';
+import arraymenu from '~/hooks/redux/arraymenu/reducer';
 const rootReducer = {
   auth,
   document,
@@ -15,6 +16,7 @@ const rootReducer = {
   activeModalHelp,
   selectMenu,
   selectLesson,
+  arraymenu,
 };
 
 export const store = configureStore({
