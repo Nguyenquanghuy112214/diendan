@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 // Components
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+// react-router-dom
+import { useLocation } from 'react-router-dom';
 //
 import useDocument from '~/hooks/redux/document/useDocument';
 // Css module
@@ -12,6 +14,10 @@ const cx = classNames.bind(styles);
 
 function LayoutDefault({ title, children }) {
   const { setTitle } = useDocument();
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   useEffect(() => {
     setTitle(title);
   }, [title]);

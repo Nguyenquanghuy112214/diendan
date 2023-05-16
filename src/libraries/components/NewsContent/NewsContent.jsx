@@ -16,10 +16,12 @@ import Section from '../Section/Section';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_NewsContent.module.scss';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function NewsContent() {
   const { new1, new2, new3, new4 } = imgNews;
   const [dataNews, setData] = useState([]);
+  console.log('dataNews', dataNews);
   useEffect(() => {
     const fetch = async () => {
       const dataNews = await FetchNews.fetchNews();
@@ -29,26 +31,29 @@ function NewsContent() {
   }, []);
   const data = [
     {
-      id: 1,
+      fakeid: 1,
+      id: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].title !== undefined && dataNews[0].newsId,
       img: new1,
       title: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].title !== undefined && dataNews[0].title,
-      content: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].content !== undefined && dataNews[0].content,
+      description: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].description !== undefined && dataNews[0].description,
       bgcolor: '#F88C3D',
       delay: 1.6,
     },
     {
-      id: 2,
+      fakeid: 2,
+      id: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].title !== undefined && dataNews[1].newsId,
       img: new2,
       title: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].title !== undefined && dataNews[1].title,
-      content: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].content !== undefined && dataNews[1].content,
+      description: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].description !== undefined && dataNews[1].description,
       bgcolor: '#9A3BE5',
       delay: 1.8,
     },
     {
-      id: 3,
+      fakeid: 3,
+      id: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].title !== undefined && dataNews[2].newsId,
       img: new3,
       title: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].title !== undefined && dataNews[2].title,
-      content: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].content !== undefined && dataNews[2].content,
+      description: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].description !== undefined && dataNews[2].description,
       bgcolor: '#2CB9A7',
       delay: 1.2,
     },
@@ -82,8 +87,9 @@ function NewsContent() {
               img={item.img}
               title={item.title}
               id={item.id}
+              fakeid={item.fakeid}
               bgcolor={item.bgcolor}
-              content={item.content}
+              description={item.description}
             />
           );
         })}
@@ -101,11 +107,17 @@ function NewsContent() {
   );
 }
 
-const NewItem = ({ img, title, bgcolor, id, delay, content }) => {
+const NewItem = ({ img, title, bgcolor, id, delay, description, fakeid }) => {
+  console.log('description', description);
+  const navigate = useNavigate();
+  const handleNextPage = () => {
+    navigate(`/news/${id}`);
+  };
   return (
     <motion.div
+      onClick={handleNextPage}
       variants={zoomIn(delay - 1.2, 1)}
-      className={cx('wrapper-newitem', `id${id ? id : ''}`)}
+      className={cx('wrapper-newitem', `id${fakeid ? fakeid : ''}`)}
       style={{ backgroundColor: bgcolor }}
     >
       <div className={cx('title')}>
@@ -113,7 +125,7 @@ const NewItem = ({ img, title, bgcolor, id, delay, content }) => {
         {title}
       </div>
       <div className={cx('describe')}>
-        <Interweave content={content} />
+        <Interweave content={description} />
       </div>
     </motion.div>
   );

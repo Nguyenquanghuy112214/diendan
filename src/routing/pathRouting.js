@@ -8,6 +8,6 @@ export const routePath = {
   register: '/register',
   forgotpassword: '/forgotpassword',
   profile: '/profile',
-  news: '/news',
-  newsdetailpage: '/newsdetailpage',
+  news: '/news/:idnews',
+  newsdetailpage: '/newsdetailpage/:idnews',
 };

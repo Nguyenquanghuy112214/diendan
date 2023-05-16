@@ -27,11 +27,13 @@ import moment from 'moment';
 import classNames from 'classnames/bind';
 import styles from './_ListResultSearch.module.scss';
 import Loading from '../AnimationLoading/Animationloading';
+import useSelectMenu from '~/hooks/redux/selectmenu/useSelectMenu';
 const cx = classNames.bind(styles);
 
 function ListResultSearch() {
   const { idLectureCategory, idContainer } = useSelectLesson();
   const [data, setData] = useState([]);
+  console.log('data', data);
   const [loading, setLoading] = useState(false);
   const fetch = async () => {
     const dataLesson = await FetchLessonByPre.fetchLessonByPre(idContainer);
@@ -101,21 +103,22 @@ const ListRusult = ({ item }) => {
         </div>
       </motion.div>
       <motion.div variants={opacity(0.2, 1)} className={cx('wrapper-list')}>
-        {item?.lectureItems?.map((item, index) => (
-          <ItemResule key={index} item={item} />
+        {item?.lectureItems?.map((item2, index) => (
+          <ItemResule key={index} item={item2} namelv0={item?.lectureCategory} />
         ))}
       </motion.div>
     </motion.div>
   );
 };
 
-const ItemResule = ({ item }) => {
-  moment.locale('vi');
+const ItemResule = ({ item, namelv0 }) => {
   const { bgitem } = imgListDataSearch;
   const navigate = useNavigate();
+  const { title, idForum } = useSelectMenu();
   const handleClick = () => {
-    navigate(routePath.detaildocument);
+    navigate(`/detaildocument/${idForum}/${title}/${namelv0}/${item?.title}/false/${item?.itemId}`);
   };
+
   return (
     <div className={cx('wrapper-item')}>
       <div onClick={handleClick} className={cx('img')}>

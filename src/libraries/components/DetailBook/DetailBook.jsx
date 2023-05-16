@@ -57,7 +57,7 @@ function DetailBook() {
       {/*  */}
       <div className={cx('wrapper-title')}>
         <div className={cx('title-navigation')}>
-          {title} {'>'} {namelv0} {'>'} {namelv1} {'>'} {namelv2}
+          {title} {'>'} {namelv0} {'>'} {namelv1} {namelv2 === 'false' ? '' : '>'} {namelv2 === 'false' ? '' : namelv2}
         </div>
         <div className={cx('title-post')}>Đưa bài giảng lên</div>
       </div>
