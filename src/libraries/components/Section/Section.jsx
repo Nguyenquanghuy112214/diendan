@@ -30,6 +30,10 @@ function Section({ title, subtitle1, subtitle2 }) {
   );
 }
 
-Section.propTypes = {};
+Section.propTypes = {
+  title: PropTypes.string,
+  subtitle1: PropTypes.string,
+  subtitle2: PropTypes.string,
+};
 
 export default Section;

@@ -17,12 +17,21 @@
       font-weight: 500;
     }
     .list {
+      min-height: 300px;
+      position: relative;
+    }
+
+    .error {
+      margin-top: 30px;
+      font-weight: 400;
+      font-size: 2.2rem;
     }
   }
 }
 
 // ListRusult
 .wrapper-listresult {
+  // position: relative;
   .wrapper-title {
     @include flex(center, space-between, nowrap);
     .title-listime {
@@ -53,7 +62,7 @@
 
 // ItemResule
 .wrapper-item {
-  box-shadow: 1px 6px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   border-radius: 8px;
   .img {

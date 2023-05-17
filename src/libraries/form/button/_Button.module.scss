@@ -63,7 +63,7 @@
   align-items: center !important;
   cursor: pointer !important;
   position: relative;
-  z-index: 9;
+  z-index: 0;
   span {
     width: 100%;
   }
@@ -81,7 +81,7 @@
   border-color: currentColor;
   cursor: pointer !important;
   position: relative;
-  z-index: 9;
+  z-index: 0;
 
   span {
     width: 100%;

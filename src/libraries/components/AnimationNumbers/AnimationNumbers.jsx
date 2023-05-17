@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 
@@ -23,4 +24,7 @@ const AnimationNumbers = ({ value }) => {
   return <span ref={ref}></span>;
 };
 
+AnimationNumbers.propTypes = {
+  value: PropTypes.number,
+};
 export default AnimationNumbers;

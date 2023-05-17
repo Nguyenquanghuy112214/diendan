@@ -14,8 +14,8 @@ import classNames from 'classnames/bind';
 import styles from './_NewsIntroduce.module.scss';
 const cx = classNames.bind(styles);
 function NewsIntroduce({ newsActive }) {
-  const { idnews } = useParams();
   const navigate = useNavigate();
+  const { idnews } = useParams();
   const { imgnews, imgavt } = imgNewsPage;
   const [img, setImg] = useState(undefined);
   const handleError = () => {
@@ -54,6 +54,8 @@ function NewsIntroduce({ newsActive }) {
   );
 }
 
-NewsIntroduce.propTypes = {};
+NewsIntroduce.propTypes = {
+  newsActive: PropTypes.object,
+};
 
 export default NewsIntroduce;

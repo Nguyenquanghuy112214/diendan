@@ -8,6 +8,9 @@ import auth from '~/hooks/redux/auth/reducer';
 import selectMenu from '~/hooks/redux/selectmenu/reducer';
 import selectLesson from '~/hooks/redux/selectIdForGetLesson/reducer';
 import arraymenu from '~/hooks/redux/arraymenu/reducer';
+import menulv0 from '~/hooks/redux/selectmenulv0/reducer';
+import menulv1 from '~/hooks/redux/selectmenulv1/reducer';
+import menulv2 from '~/hooks/redux/selectmenulv2/reducer';
 const rootReducer = {
   auth,
   document,
@@ -17,6 +20,9 @@ const rootReducer = {
   selectMenu,
   selectLesson,
   arraymenu,
+  menulv0,
+  menulv1,
+  menulv2,
 };
 
 export const store = configureStore({

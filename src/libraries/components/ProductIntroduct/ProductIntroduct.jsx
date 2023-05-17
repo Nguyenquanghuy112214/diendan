@@ -13,7 +13,7 @@ import { staggerContainer, tranformY, zoomIn } from '~/constants/motion';
 import classNames from 'classnames/bind';
 import styles from './_ProductIntroduct.module.scss';
 const cx = classNames.bind(styles);
-function ProductIntroduct(props) {
+function ProductIntroduct() {
   const { img1, img2, img3 } = imgProductIntro;
   const data = [
     {

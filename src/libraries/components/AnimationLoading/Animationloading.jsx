@@ -3,7 +3,7 @@ import styles from './AnimationLoading.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const cx = classNames.bind(styles);
-function Loading({ active, opa, fixed }) {
+function Loading({ active, opa, absolute }) {
   return (
     <AnimatePresence>
       {active ? (
@@ -14,7 +14,7 @@ function Loading({ active, opa, fixed }) {
           }}
           exit={{ opacity: 0, transition: { duration: 0.6 } }}
           className={cx('modal')}
-          style={{ position: fixed ? 'fixed' : '' }}
+          style={{ position: absolute ? 'absolute' : 'fixed' }}
         >
           <div className={cx('loading')}>
             <div className={cx('lds-spinner')}>

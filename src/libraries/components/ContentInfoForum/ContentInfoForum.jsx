@@ -14,7 +14,7 @@ import { imgLayoutNoNavbar } from '~/assets/img/layoutnonavbar';
 import classNames from 'classnames/bind';
 import styles from './_ContentInfoForum.module.scss';
 const cx = classNames.bind(styles);
-function ContentInfoForum(props) {
+function ContentInfoForum() {
   const { nvmain, nvsub, vach, mail, calendar } = imgLayoutNoNavbar;
   return (
     <motion.div

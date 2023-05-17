@@ -6,7 +6,7 @@ import logo from '~/assets/img/logo.png';
 import { TypingText } from '~/libraries/components/AnimationText/TypingText';
 // animation
 import { motion } from 'framer-motion';
-import { staggerContainer, tranformY, zoomIn } from '~/constants/motion';
+import { staggerContainer, tranformY } from '~/constants/motion';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_Footer.module.scss';

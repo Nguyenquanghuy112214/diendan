@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import useSelectMenu from '~/hooks/redux/selectmenu/useSelectMenu';
 import useSelectLesson from '~/hooks/redux/selectIdForGetLesson/useSelectLesson';
 import useArrayMenu from '~/hooks/redux/arraymenu/useArrayMenu';
+import useTitle from '~/hooks/redux/tiltle/useSelectMenuLv2';
 
 // call api
 import * as FetchMenu from '~/utils/fetchapi/FetchMenu';
 import * as FetchTreeFolder from '~/utils/fetchapi/FetchTreeFolder';
-import * as FetchLessonByIdController from '~/utils/fetchapi/FetchLessonByIdController';
 
 // menu
 import { menuHistory, menuOther } from '~/constants/menu';
@@ -25,9 +25,12 @@ import styles from './_Menu.module.scss';
 const cx = classNames.bind(styles);
 function Menu() {
   const { idForum } = useSelectMenu();
+
+  const { setMenuLv0, setMenuLv1, setMenuLv2 } = useTitle();
   const { setArrayMenu } = useArrayMenu();
   const [menu, setMenu] = useState([]);
   const [menuTree, setMenuTree] = useState([]);
+  console.log('menuTree', menuTree);
   // Call API
   useEffect(() => {
     const fetch = async () => {
@@ -44,19 +47,21 @@ function Menu() {
     };
     fetch();
   }, []);
-  console.log('idForum', idForum);
   useEffect(() => {
     const fetch = async () => {
       const dataMenuTree = await FetchTreeFolder.fetchTreeFolder(idForum);
-
-      setMenuTree([
-        {
-          title: 'Thư mục cấp học',
-          hiddenMenu: false,
-          active: true,
-          children: [...dataMenuTree.data],
-        },
-      ]);
+      if (dataMenuTree !== undefined) {
+        setMenuTree([
+          {
+            title: 'Thư mục cấp học',
+            hiddenMenu: false,
+            active: true,
+            children: [...dataMenuTree.data],
+          },
+        ]);
+      } else {
+        setMenuTree([]);
+      }
     };
 
     fetch();
@@ -65,12 +70,20 @@ function Menu() {
     }
   }, [idForum]);
 
+  useEffect(() => {
+    setMenuLv0({ title: null });
+    setMenuLv1({ title: null });
+    setMenuLv2({ title: null });
+  }, [idForum]);
+
   return (
     <>
       <Loading fixed opa={0.6} active={menu !== undefined && menu.length === 0} />
       <ul className={cx('menu')}>{menu !== undefined && menu.map((item, indexmenu) => <MenuNoLv key={indexmenu} item={item} />)}</ul>
       <ul className={cx('menu')}>
-        {menuTree !== undefined && menuTree.map((item, indexmenu) => <MenuItemLv0 key={indexmenu} indexmenu={indexmenu} item={item} />)}
+        {menuTree !== undefined
+          ? menuTree.map((item, indexmenu) => <MenuItemLv0 key={indexmenu} indexmenu={indexmenu} item={item} />)
+          : null}
       </ul>
       <ul className={cx('menu')}>
         {menuHistory.map((item, indexmenu) => (
@@ -95,7 +108,6 @@ const MenuNoLv = ({ item }) => {
   const naviagte = useNavigate();
 
   const handleClick = (item) => {
-    console.log('sd', item);
     setIdChangeLesson({
       idController: item.idController,
     });
@@ -130,14 +142,26 @@ const MenuNoLv = ({ item }) => {
 
 const MenuItemLv0 = ({ item }) => {
   const { menuId } = useSelectMenu();
-  const { setIdChangeLesson } = useSelectLesson();
+  const { setIdChangeLesson, idController } = useSelectLesson();
+  const { setMenuLv0, setMenuLv1 } = useTitle();
+
   const [lv0, setLv0] = useState(null);
   const handleClick = (child) => {
-    setIdChangeLesson({ idLectureCategory: child.itemId });
+    console.log('child', child);
+
+    setMenuLv0({ title: child.title });
+    setIdChangeLesson({
+      idController,
+      idLectureCategory: child.itemId,
+    });
     if (child.level === 0 && +lv0 !== child.itemId) {
       setLv0(child.itemId);
     } else if (+lv0 === child.itemId && +lv0 === child.itemId) {
+      setIdChangeLesson({
+        idController,
+      });
       setLv0(null);
+      setMenuLv1({ title: null });
     }
   };
   useEffect(() => {
@@ -180,19 +204,25 @@ const MenuItemLv0 = ({ item }) => {
   }
 };
 
-const MenuItemLv1 = ({ item, onClick, lv0, namelv0 }) => {
+const MenuItemLv1 = ({ item, onClick, lv0 }) => {
   const { menuId } = useSelectMenu();
   const [lv1, setLv1] = useState(null);
+  const { setMenuLv1, setMenuLv2, titlelv0 } = useTitle();
+  const { setIdChangeLesson, idController } = useSelectLesson();
   const handleClick2 = (child) => {
+    setMenuLv1({ title: child.title });
+    setIdChangeLesson({ idLectureCategory: child.itemId, idController });
+
     if (child.level === 1 && +lv1 !== child.itemId) {
       setLv1(child.itemId);
     } else if (+lv1 === child.itemId && +lv1 === child.itemId) {
       setLv1(null);
+      setMenuLv2({ title: null });
     }
   };
   useEffect(() => {
     setLv1(null);
-  }, [menuId]);
+  }, [menuId, titlelv0, lv0]);
   const handleClick = () => {
     if (onClick) onClick();
   };
@@ -217,15 +247,7 @@ const MenuItemLv1 = ({ item, onClick, lv0, namelv0 }) => {
           }}
         >
           {item.children.map((child, indexchild) => (
-            <MenuItemLv2
-              namelv0={namelv0}
-              namelv1={child.title}
-              lv1={lv1}
-              onClick={() => handleClick2(child)}
-              key={indexchild}
-              item={child}
-              index={indexchild}
-            />
+            <MenuItemLv2 lv1={lv1} onClick={() => handleClick2(child)} key={indexchild} item={child} index={indexchild} />
           ))}
         </motion.ul>
       </li>
@@ -242,19 +264,24 @@ const MenuItemLv1 = ({ item, onClick, lv0, namelv0 }) => {
   }
 };
 
-const MenuItemLv2 = ({ item, lv1, onClick, namelv0, namelv1 }) => {
+const MenuItemLv2 = ({ item, lv1, onClick }) => {
   const { menuId } = useSelectMenu();
+  const { setIdChangeLesson, idController } = useSelectLesson();
+  const { setMenuLv2, titlelv1 } = useTitle();
   const [lv2, setLv2] = useState(null);
   const handleClick2 = (child) => {
+    setIdChangeLesson({ idLectureCategory: child.itemId, idController });
+    setMenuLv2({ title: child.title });
     if (child.level === 2 && +lv2 !== child.itemId) {
       setLv2(child.itemId);
     } else if (+lv2 === child.itemId && +lv2 === child.itemId) {
       setLv2(null);
+      setMenuLv2({ title: null });
     }
   };
   useEffect(() => {
     setLv2(null);
-  }, [menuId]);
+  }, [menuId, titlelv1, lv1]);
   const handleClick = () => {
     if (onClick) onClick();
   };
@@ -278,16 +305,7 @@ const MenuItemLv2 = ({ item, lv1, onClick, namelv0, namelv1 }) => {
           }}
         >
           {item.children.map((child, indexchild) => (
-            <MenuItemLv3
-              namelv0={namelv0}
-              namelv1={namelv1}
-              namelv2={child.title}
-              lv2={lv2}
-              onClick={() => handleClick2(child)}
-              key={indexchild}
-              item={child}
-              index={indexchild}
-            />
+            <MenuItemLv3 lv2={lv2} onClick={() => handleClick2(child)} key={indexchild} item={child} index={indexchild} />
           ))}
         </motion.ul>
       </li>
@@ -304,12 +322,9 @@ const MenuItemLv2 = ({ item, lv1, onClick, namelv0, namelv1 }) => {
   }
 };
 
-const MenuItemLv3 = ({ item, lv2, onClick, namelv0, namelv1, namelv2 }) => {
-  const { title, idForum } = useSelectMenu();
-  const navigate = useNavigate();
+const MenuItemLv3 = ({ item, lv2, onClick }) => {
   const handleClick = () => {
     if (onClick) onClick();
-    navigate(`/detaildocument/${idForum}/${title}/${namelv0}/${namelv1}/${namelv2}/${item.itemId}`);
   };
 
   if (item.children) {

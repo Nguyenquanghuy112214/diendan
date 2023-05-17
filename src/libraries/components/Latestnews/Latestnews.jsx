@@ -58,6 +58,8 @@ export const NewsItem = ({ item, index }) => {
     </div>
   );
 };
-Latestnews.propTypes = {};
+Latestnews.propTypes = {
+  listNews: PropTypes.array,
+};
 
 export default Latestnews;

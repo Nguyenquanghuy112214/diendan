@@ -47,17 +47,19 @@ function DetailBook() {
   useEffect(() => {
     const fetch = async () => {
       const dataDetail = await FetchDetaiDocument.FetchDetaiDocument(idforum, iditem);
-      console.log('dataDetail', dataDetail);
     };
     fetch();
   }, [iditem]);
+
   const start = [1, 1, 1, 1, 1];
   return (
     <div className={cx('wrapper')}>
       {/*  */}
       <div className={cx('wrapper-title')}>
         <div className={cx('title-navigation')}>
-          {title} {'>'} {namelv0} {'>'} {namelv1} {namelv2 === 'false' ? '' : '>'} {namelv2 === 'false' ? '' : namelv2}
+          {title === 'null' ? '' : title} {namelv0 === 'null' ? '' : '>'} {namelv0 === 'null' ? '' : namelv0}{' '}
+          {namelv1 === 'null' ? '' : '>'} {namelv1 === 'null' ? '' : namelv1} {namelv2 === 'null' ? '' : '>'}{' '}
+          {namelv2 === 'null' ? '' : namelv2}
         </div>
         <div className={cx('title-post')}>Đưa bài giảng lên</div>
       </div>

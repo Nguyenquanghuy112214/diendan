@@ -10,9 +10,8 @@ import { imgUpdate } from '~/assets/img/updatedpage';
 import classNames from 'classnames/bind';
 import styles from './_ItemUpdate.module.scss';
 const cx = classNames.bind(styles);
-function ItemUpdate(props) {
+function ItemUpdate() {
   const [indexActive, setIndexActive] = useState();
-  console.log('indexActive', indexActive);
   const data = [
     { id: 1, title: 'Bài giảng đã tải lên' },
     { id: 2, title: 'Giáo án đã tải lên' },

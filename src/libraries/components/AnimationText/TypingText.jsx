@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 // animotion
 import { motion } from 'framer-motion';
 import { textContainer, textVariant2 } from '~/constants/motion';
@@ -15,3 +16,9 @@ export const TypingText = ({ title, y, time }) => (
     ))}
   </motion.p>
 );
+
+TypingText.propTypes = {
+  title: PropTypes.string,
+  y: PropTypes.number,
+  time: PropTypes.number,
+};

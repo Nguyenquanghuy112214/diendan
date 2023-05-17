@@ -53,6 +53,15 @@ function ToastNotify({ title, subtitle, active, success, systemerror, existemail
   );
 }
 
-ToastNotify.propTypes = {};
+ToastNotify.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  active: PropTypes.bool,
+  success: PropTypes.bool,
+  systemerror: PropTypes.bool,
+  existemail: PropTypes.bool,
+  existname: PropTypes.bool,
+  className: PropTypes.string,
+};
 
 export default ToastNotify;

@@ -8,7 +8,7 @@ import { imgProfile } from '~/assets/img/profile';
 import classNames from 'classnames/bind';
 import styles from './_Security.module.scss';
 const cx = classNames.bind(styles);
-function Security(props) {
+function Security() {
   const { add } = imgProfile;
   return (
     <div className={cx('wrapper')}>

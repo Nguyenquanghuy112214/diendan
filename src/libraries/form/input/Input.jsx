@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 // formik
 import { Field, useField } from 'formik';
@@ -39,3 +40,19 @@ export function Input({ forgot, error, touched, title, handleNavigate, onBlur, o
     </div>
   );
 }
+
+Input.propTypes = {
+  forgot: PropTypes.bool,
+  error: PropTypes.string,
+  touched: PropTypes.bool,
+  title: PropTypes.string,
+  onBlur: PropTypes.func,
+  handleNavigate: PropTypes.func,
+  onClick: PropTypes.func,
+  type: PropTypes.string,
+  column: PropTypes.bool,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  normal: PropTypes.bool,
+};

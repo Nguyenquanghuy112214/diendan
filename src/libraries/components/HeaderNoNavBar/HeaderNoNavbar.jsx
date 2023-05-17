@@ -19,7 +19,6 @@ const cx = classNames.bind(styles);
 function HeaderNoNavbar(props) {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log('location', location.pathname);
   const { logo } = imgLayoutNoNavbar;
   const data = [{ title: 'Home' }, { title: 'Tài Liệu' }, { title: 'Blog' }, { title: 'About Us' }];
   const handleLogin = () => {

@@ -49,6 +49,8 @@ function Account({ data }) {
   );
 }
 
-Account.propTypes = {};
+Account.propTypes = {
+  data: PropTypes.object,
+};
 
 export default Account;

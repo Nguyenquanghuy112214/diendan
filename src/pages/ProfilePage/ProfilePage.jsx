@@ -29,7 +29,6 @@ function ProfilePage(props) {
     const fetch = async () => {
       const dataProfile = await fetchProfile.fetchProfile();
       setData(dataProfile.data);
-      console.log('dataProfile', dataProfile);
     };
     fetch();
   }, []);

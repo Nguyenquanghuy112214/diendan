@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeLesson } from './reducer';
 
 function useSelectLesson() {
-  const idContainer = useSelector(
+  const idController = useSelector(
     (state) =>
       state.selectLesson !== undefined &&
       state.selectLesson.selectLesson !== undefined &&
@@ -22,7 +22,7 @@ function useSelectLesson() {
     const action = changeLesson(menu);
     dispatch(action);
   };
-  return { idContainer, idLectureCategory, setIdChangeLesson };
+  return { idController, idLectureCategory, setIdChangeLesson };
 }
 
 export default useSelectLesson;

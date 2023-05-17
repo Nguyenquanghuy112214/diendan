@@ -19,7 +19,7 @@ import styles from './_NewsContent.module.scss';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function NewsContent() {
-  const { new1, new2, new3, new4 } = imgNews;
+  const { new1, new2, new3 } = imgNews;
   const [dataNews, setData] = useState([]);
   useEffect(() => {
     const fetch = async () => {

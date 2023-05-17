@@ -11,7 +11,7 @@ import { staggerContainer, tranformY } from '~/constants/motion';
 import classNames from 'classnames/bind';
 import styles from './_ProfileCompany.module.scss';
 const cx = classNames.bind(styles);
-function ProfileCompany(props) {
+function ProfileCompany() {
   const { bt, mn, ck } = imgProfileCompany;
   const data = [
     {

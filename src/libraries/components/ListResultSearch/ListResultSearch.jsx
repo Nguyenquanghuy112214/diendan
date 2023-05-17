@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 //
 import { useNavigate } from 'react-router-dom';
-import { routePath } from '~/routing/pathRouting';
 
 // reacticon
 import { AiFillEye } from 'react-icons/ai';
@@ -12,6 +11,7 @@ import useCloseModal from '~/hooks/redux/closemodal/useCloseModal';
 import { imgListDataSearch } from '~/assets/img/listdatasearch';
 // hook
 import useSelectLesson from '~/hooks/redux/selectIdForGetLesson/useSelectLesson';
+import useTitle from '~/hooks/redux/tiltle/useSelectMenuLv2';
 // thu vien animation
 import { motion } from 'framer-motion';
 // animation
@@ -29,21 +29,23 @@ import styles from './_ListResultSearch.module.scss';
 import Loading from '../AnimationLoading/Animationloading';
 import useSelectMenu from '~/hooks/redux/selectmenu/useSelectMenu';
 import useArrayMenu from '~/hooks/redux/arraymenu/useArrayMenu';
-import { forEach } from 'lodash';
 const cx = classNames.bind(styles);
 
 function ListResultSearch() {
-  const { idLectureCategory, idContainer } = useSelectLesson();
-  const { arraymenu, setArrayMenu } = useArrayMenu();
+  const { idLectureCategory, idController } = useSelectLesson();
+  const { arraymenu } = useArrayMenu();
   const [data, setData] = useState([]);
-  console.log('arraymenu', arraymenu);
-  const [loading, setLoading] = useState(false);
+  console.log('idController', idController);
   const fetch = async () => {
-    const dataLesson = await FetchLessonByPre.fetchLessonByPre(idContainer);
-    setData(dataLesson.data);
+    const dataLesson = await FetchLessonByPre.fetchLessonByPre(idController);
+    if (dataLesson !== undefined) {
+      setData(dataLesson.data);
+    } else {
+      setData([]);
+    }
   };
   const fetch2 = async () => {
-    const dataLesson = await FetchLessonByIdLecture.FetchLessonByIdLecture(idLectureCategory);
+    const dataLesson = await FetchLessonByIdLecture.FetchLessonByIdLecture(idController, idLectureCategory);
     setData(dataLesson.data);
   };
 
@@ -53,34 +55,42 @@ function ListResultSearch() {
     const dataLv0 = [];
     for (i = 0; i < length; i++) {
       const dataItemLv0 = await FetchLessonNoCategory.FetchLessonNoCategory(arraymenu[i].idController);
+      console.log('dataItemLv0', dataItemLv0);
       dataLv0.push({
-        lectureCategory: `Thư viện ${arraymenu[i].title} `,
+        lectureCategory: `Thư viện ${arraymenu[i]?.title} `,
+        idController: arraymenu[i]?.idController,
         lectureItems: [...dataItemLv0.data],
       });
     }
-
+    console.log('dataLv0', dataLv0);
     setData(dataLv0);
   };
 
   useEffect(() => {
-    if (idLectureCategory === false && idContainer !== false) {
+    if (idLectureCategory === false && idController !== false) {
+      console.log('th1');
       fetch();
     } else if (idLectureCategory !== false) {
+      console.log('th2');
+
       fetch2();
-    } else if (idLectureCategory === false && idContainer === false) {
+    } else if (idLectureCategory === false && idController === false) {
+      console.log('th3');
+
       fetch3();
     }
-  }, [idContainer, idLectureCategory]);
+  }, [idController, idLectureCategory, arraymenu]);
 
   return (
     <div className={cx('wrapper')}>
-      <Loading active={loading === true} />
       <div className={cx('wrapper2')}>
         <div className={cx('title')}>Thư viện Tài Liệu</div>
         <div className={cx('list')}>
-          {data?.map((item, index) => (
-            <ListRusult item={item} key={index} />
-          ))}
+          {data !== undefined && data.length > 0 ? (
+            data?.map((item, index) => <ListRusult item={item} key={index} />)
+          ) : (
+            <div className={cx('error')}></div>
+          )}
         </div>
       </div>
     </div>
@@ -111,19 +121,20 @@ const ListRusult = ({ item }) => {
       </motion.div>
       <motion.div variants={opacity(0.2, 1)} className={cx('wrapper-list')}>
         {item?.lectureItems?.map((item2, index) => (
-          <ItemResule key={index} item={item2} namelv0={item?.lectureCategory} />
+          <ItemResule key={index} item={item2} itemParent={item} />
         ))}
       </motion.div>
     </motion.div>
   );
 };
 
-const ItemResule = ({ item, namelv0 }) => {
+const ItemResule = ({ item, itemParent }) => {
   const { bgitem } = imgListDataSearch;
   const navigate = useNavigate();
   const { title, idForum } = useSelectMenu();
+  const { titlelv0, titlelv1, titlelv2 } = useTitle();
   const handleClick = () => {
-    navigate(`/detaildocument/${idForum}/${title}/${namelv0}/${item?.title}/false/${item?.itemId}`);
+    navigate(`/detaildocument/${idForum || itemParent?.idController}/${title}/${titlelv0}/${titlelv1}/${titlelv2}/${item?.itemId}`);
   };
 
   return (

@@ -13,7 +13,6 @@ const selectMenu = createSlice({
   initialState: initialState,
   reducers: {
     changeSelectMenu: (state, action) => {
-      console.log('action', action);
       state.menuTree = action.payload;
     },
   },

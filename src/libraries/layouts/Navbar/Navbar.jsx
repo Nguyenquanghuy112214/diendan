@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 
 function Navbar() {
   const navigate = useNavigate();
-  const { menuId, setActiveModalHelp } = useSelectMenu();
+  const { setActiveModalHelp } = useSelectMenu();
   const { setIdChangeLesson } = useSelectLesson();
   const [active, setActive] = useState(false);
   useEffect(() => {
