@@ -16,20 +16,20 @@ function ProfileCompany() {
   const data = [
     {
       img: bt,
-      title: '30 clients',
-      subtitle: 'Content 1',
+      title: '500',
+      subtitle: 'Trường',
       color: '#FCBE0035',
     },
     {
       img: mn,
       title: '3,5 M+',
-      subtitle: 'Content 1',
+      subtitle: 'Giáo viên',
       color: '#D3E5FD',
     },
     {
       img: ck,
       title: '43,7 M+',
-      subtitle: 'Content 13',
+      subtitle: 'Bài Giảng - Đề Thi',
       color: '#9A3BE522',
     },
   ];
@@ -37,8 +37,8 @@ function ProfileCompany() {
     <div className={cx('wrapper')}>
       <Section
         title="Thông tin công ty"
-        subtitle1="Une agence de jeunes passionnés par le digital et répondent"
-        subtitle2="sur-mesure à votre problématiques de croissance "
+        subtitle1="CÔNG TY CỔ PHẦN ĐẦU TƯ THƯƠNG MẠI VÀ CÔNG NGHỆ BKT"
+        subtitle2="“Giải Pháp Công Nghệ Thông Tin Tốt Nhất”"
       />
       <motion.div
         variants={staggerContainer}

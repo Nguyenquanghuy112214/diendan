@@ -19,17 +19,17 @@ function ProductIntroduct() {
     {
       img: img1,
       title: 'Phần mềm tiếng anh cho trẻ BKT SmartKids',
-      subtitle: 'Saviez-vous que 78% des Québécois consultent un site Internet avant de faire un achat ?',
+      link: 'https://smartkids.bkt.net.vn',
     },
     {
       img: img2,
       title: 'Phần mềm hỗ trợ soạn thảo thông minh  BKT SmartElearning',
-      subtitle: 'Saviez-vous que 78% des Québécois consultent un site Internet avant de faire un achat ?',
+      link: 'https://smartenglish.bkt.net.vn',
     },
     {
       img: img3,
       title: 'Phần mềm hỗ trợ soạn thảo thông minh  BKT SmartElearning',
-      subtitle: 'Saviez-vous que 78% des Québécois consultent un site Internet avant de faire un achat ?3',
+      link: 'https://lib.bkt.net.vn',
     },
   ];
   return (
@@ -69,12 +69,12 @@ const ProfileComItem = ({ data }) => {
         <div className={cx('title')}>{data.title}</div>
         <div className={cx('sub-title')}>{data.subtitle}</div>
       </div>
-      <div className={cx('read-more')}>
+      <a href={data.link} className={cx('read-more')}>
         Xem thêm
         <span>
           <AiOutlineArrowRight />
         </span>
-      </div>
+      </a>
     </motion.div>
   );
 };

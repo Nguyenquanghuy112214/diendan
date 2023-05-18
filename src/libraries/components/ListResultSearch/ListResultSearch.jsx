@@ -36,6 +36,7 @@ function ListResultSearch() {
   const { arraymenu } = useArrayMenu();
   const [data, setData] = useState([]);
   console.log('idController', idController);
+  console.log('idLectureCategory', idLectureCategory);
   const fetch = async () => {
     const dataLesson = await FetchLessonByPre.fetchLessonByPre(idController);
     if (dataLesson !== undefined) {
@@ -114,7 +115,9 @@ const ListRusult = ({ item }) => {
       className={cx('wrapper-listresult')}
     >
       <motion.div variants={opacity(0.1, 1)} className={cx('wrapper-title')}>
-        <div className={cx('title-listime')}>{item?.lectureCategory || item?.examsAndTestsCategory || item?.lessonPlanCategory}</div>
+        <div className={cx('title-listime')}>
+          {item?.lectureCategory || item?.examsAndTestsCategory || item?.lessonPlanCategory || item?.eLearningCategory}
+        </div>
         <div className={cx('wrapper-nivigate')}>
           <span>Xem tất cả</span> | <span onClick={postDocument}>Đưa bài giảng lên</span>
         </div>

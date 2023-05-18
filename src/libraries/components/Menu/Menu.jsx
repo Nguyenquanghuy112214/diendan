@@ -25,6 +25,7 @@ import styles from './_Menu.module.scss';
 const cx = classNames.bind(styles);
 function Menu() {
   const { idForum } = useSelectMenu();
+  console.log('idForum', idForum);
 
   const { setMenuLv0, setMenuLv1, setMenuLv2 } = useTitle();
   const { setArrayMenu } = useArrayMenu();
@@ -141,14 +142,13 @@ const MenuNoLv = ({ item }) => {
 };
 
 const MenuItemLv0 = ({ item }) => {
+  const [lv0, setLv0] = useState(null);
+
   const { menuId } = useSelectMenu();
   const { setIdChangeLesson, idController } = useSelectLesson();
   const { setMenuLv0, setMenuLv1 } = useTitle();
 
-  const [lv0, setLv0] = useState(null);
   const handleClick = (child) => {
-    console.log('child', child);
-
     setMenuLv0({ title: child.title });
     setIdChangeLesson({
       idController,
@@ -164,9 +164,11 @@ const MenuItemLv0 = ({ item }) => {
       setMenuLv1({ title: null });
     }
   };
+
   useEffect(() => {
     setLv0(null);
   }, [menuId]);
+
   if (item.children) {
     return (
       <li className={cx('menu-item')}>
@@ -205,10 +207,11 @@ const MenuItemLv0 = ({ item }) => {
 };
 
 const MenuItemLv1 = ({ item, onClick, lv0 }) => {
-  const { menuId } = useSelectMenu();
   const [lv1, setLv1] = useState(null);
+  const { menuId } = useSelectMenu();
   const { setMenuLv1, setMenuLv2, titlelv0 } = useTitle();
   const { setIdChangeLesson, idController } = useSelectLesson();
+
   const handleClick2 = (child) => {
     setMenuLv1({ title: child.title });
     setIdChangeLesson({ idLectureCategory: child.itemId, idController });
@@ -220,9 +223,11 @@ const MenuItemLv1 = ({ item, onClick, lv0 }) => {
       setMenuLv2({ title: null });
     }
   };
+
   useEffect(() => {
     setLv1(null);
   }, [menuId, titlelv0, lv0]);
+
   const handleClick = () => {
     if (onClick) onClick();
   };
