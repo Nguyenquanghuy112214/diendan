@@ -10,6 +10,7 @@ import useDocument from '~/hooks/redux/document/useDocument';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_LayoutDefault.module.scss';
+import Auth from '~/middlewares/withAuthClient';
 const cx = classNames.bind(styles);
 
 function LayoutDefault({ title, children }) {
@@ -22,7 +23,7 @@ function LayoutDefault({ title, children }) {
     setTitle(title);
   }, [title]);
   return (
-    <>
+    <div>
       <div className={cx('wrapper')}>
         <div className={cx('nav')}>
           <Navbar />
@@ -30,7 +31,7 @@ function LayoutDefault({ title, children }) {
         <div className={cx('children')}>{children}</div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

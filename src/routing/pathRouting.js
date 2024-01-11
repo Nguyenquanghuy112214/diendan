@@ -1,9 +1,9 @@
 export const routePath = {
-  dashboardpage: '/',
+  dashboardpage: '/home',
   detaildocument: '/detaildocument/:idforum/:title/:namelv0/:namelv1/:namelv2/:iditem',
   updatepage: '/updatepage',
   downloadedpage: '/downloadedpage',
-  introforum: '/introforum',
+  introforum: '/',
   login: '/login',
   register: '/register',
   forgotpassword: '/forgotpassword',

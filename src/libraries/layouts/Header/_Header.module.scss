@@ -10,8 +10,8 @@
   width: calc(100% - $width-navbar-xl);
   padding: 27px 40px;
   box-shadow: 4px 0px 3px rgba(0, 0, 0, 0.1);
-  z-index: 1;
   transition: all 0.12s ease;
+  z-index: 1;
 
   @include screen-lg {
     padding: 17px 20px;

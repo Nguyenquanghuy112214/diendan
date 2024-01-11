@@ -15,6 +15,7 @@ import NewsContent from '~/libraries/components/NewsContent/NewsContent';
 import ProfileCompany from '~/libraries/components/ProfileCompany/ProfileCompany';
 import ProductIntroduct from '~/libraries/components/ProductIntroduct/ProductIntroduct';
 import Modal from '~/libraries/components/Modal/Modal';
+import { useFusionAuth } from "@fusionauth/react-sdk";
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_DashboardPage.module.scss';
@@ -22,6 +23,8 @@ const cx = classNames.bind(styles);
 
 function DashboardPage() {
   const { document } = useDocument();
+  const { isAuthenticated } = useFusionAuth();
+  console.log("isAuthenticated", isAuthenticated);
   const location = useLocation();
 
   useEffect(() => {

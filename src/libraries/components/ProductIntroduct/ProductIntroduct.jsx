@@ -69,7 +69,7 @@ const ProfileComItem = ({ data }) => {
         <div className={cx('title')}>{data.title}</div>
         <div className={cx('sub-title')}>{data.subtitle}</div>
       </div>
-      <a href={data.link} className={cx('read-more')}>
+      <a href={data.link} target='_blank' className={cx('read-more')}>
         Xem thêm
         <span>
           <AiOutlineArrowRight />

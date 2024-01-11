@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // Components
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import Auth from '~/middlewares/withAuthClient';
 // react-router-dom
 import { useLocation } from 'react-router-dom';
 //

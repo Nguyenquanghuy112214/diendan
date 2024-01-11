@@ -17,10 +17,7 @@ function NewsIntroduce({ newsActive }) {
   const navigate = useNavigate();
   const { idnews } = useParams();
   const { imgnews, imgavt } = imgNewsPage;
-  const [img, setImg] = useState(undefined);
-  const handleError = () => {
-    setImg(imgnews);
-  };
+
   const handleNextPage = () => {
     navigate(`/newsdetailpage/${idnews}`);
   };
@@ -30,12 +27,12 @@ function NewsIntroduce({ newsActive }) {
       <div className={cx('wrapper-left-right')}>
         <div className={cx('left')}>
           <div className={cx('img')}>
-            <img onClick={handleNextPage} onError={() => handleError()} src={img === undefined ? newsActive?.thumbnail : imgnews} alt="" />
+            <img onClick={handleNextPage} src={`https://diendan.bkt.net.vn/Resourcelib/${newsActive?.thumbnail}`} alt="" />
           </div>
         </div>
         <div className={cx('right')}>
           <div className={cx('wrapper-category-date')}>
-            <div className={cx('category')}>Category</div>
+            <div className={cx('category')}>{newsActive?.categoryNews || "Chưa có thông tin"}</div>
             <div className={cx('date')}>
               {' '}
               {newsActive?.createdOnDate === null ? 'No date' : moment(newsActive?.createdOnDate).format('Do-MM-YYYY')}
@@ -45,8 +42,8 @@ function NewsIntroduce({ newsActive }) {
             <Interweave content={newsActive?.description} />
           </div>
           <div className={cx('auth')}>
-            <img src={imgavt} alt="" />
-            Chandler Bing
+            Tác giả: {newsActive?.createdByUser || "Chưa có thông tin"}
+            {/* <img src={imgavt} alt="" /> */}
           </div>
         </div>
       </div>

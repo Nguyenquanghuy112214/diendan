@@ -23,7 +23,6 @@ const cx = classNames.bind(styles);
 function FormLogin(props) {
   const { google } = imgRegister;
   const { auth, setAuth } = useAuth();
-  console.log('auth', auth);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -38,8 +37,8 @@ function FormLogin(props) {
     setAuth(dataLogin.data);
   };
   useEffect(() => {
-    if (auth !== undefined && auth.length > 0) {
-      // navigate(routePath.dashboardpage);
+    if (auth !== undefined && auth?.token?.length > 0) {
+      navigate(routePath.dashboardpage);
     }
   }, [auth]);
   return (
@@ -50,12 +49,7 @@ function FormLogin(props) {
       }}
       validationSchema={Yup.object({
         Email: Yup.string().required('Vui lòng nhập email'),
-        Password: Yup.string()
-          .matches(/^[a-zA-Z0-9]+$/, 'Vui lòng không nhập kí tự đặc biệt hoặc khoảng trắng')
-          .min(5, 'Vui lòng nhập ít nhất 5 ký tự')
-          .max(11, 'Vui lòng không nhập quá 11 ký tự')
-          .matches(/(?=(.*[0-9]))(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{5,}/, 'Nhập ít nhất 1 số, 1 chữ thường, 1 chữ hoa')
-          .required('Vui lòng nhập mật khẩu mới'),
+        Password: Yup.string().required('Vui lòng nhập mật khẩu'),
       })}
       onSubmit={handleSubmit}
     >

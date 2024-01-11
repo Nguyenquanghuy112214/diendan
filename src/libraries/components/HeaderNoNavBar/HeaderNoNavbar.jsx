@@ -20,16 +20,19 @@ function HeaderNoNavbar(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const { logo } = imgLayoutNoNavbar;
-  const data = [{ title: 'Home' }, { title: 'Tài Liệu' }, { title: 'Blog' }, { title: 'About Us' }];
+  const data = [{ title: 'Trang chủ' }, { title: 'Tài liệu', path: routePath.dashboardpage }, { title: 'Bài viết' }, { title: 'Về chúng tôi' }];
   const handleLogin = () => {
     navigate(routePath.login);
   };
   const handleRegister = () => {
     navigate(routePath.register);
   };
+  const handleClick = (menu) => {
+    navigate(menu.path);
+  };
   return (
     <motion.div variants={staggerContainer} initial="hidden" whileInView="show" className={cx('wrapper')}>
-      <div className={cx('logo')}>
+      <div onClick={() => navigate(routePath.dashboardpage)} className={cx('logo')}>
         <TypingText title="BKTForum" />
         <motion.img variants={zoomIn(0.6, 2)} src={logo} alt="" />
       </div>
@@ -37,17 +40,17 @@ function HeaderNoNavbar(props) {
         <div className={cx('menu')}>
           {data.map((menu, index) => {
             return (
-              <div key={index} className={cx('item')}>
+              <div onClick={() => handleClick(menu)} key={index} className={cx('item')}>
                 {menu.title}
               </div>
             );
           })}
           <div className={cx('wrapper-button')}>
             <Button onClick={handleLogin} outline>
-              Login
+              Đăng nhập
             </Button>
             <Button onClick={handleRegister} primary>
-              Sign Up
+              Đăng ký
             </Button>
           </div>
         </div>

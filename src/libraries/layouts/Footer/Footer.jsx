@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 function Footer() {
   const { face, imgins, imgin } = imgFooter;
   return (
-    <motion.div variants={staggerContainer} initial="hidden" whileInView="show" className={cx('wrapper')}>
+    <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className={cx('wrapper')}>
       <motion.div className={cx('wrapper-listcol')}>
         <motion.div variants={tranformY(0.2, 2, true)} className={cx('col1')}>
           <div className={cx('logo')}>

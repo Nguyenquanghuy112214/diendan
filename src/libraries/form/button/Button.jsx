@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 export default function Button({
   to,
   href,
+
   primary = false,
   outline = false,
   join = false,
@@ -17,6 +18,8 @@ export default function Button({
   small = false,
   large = false,
   search = false,
+  rgt = false,
+  lg = false,
   children,
   className,
   leftIcon,
@@ -44,6 +47,7 @@ export default function Button({
     Comp = Link;
   } else if (href) {
     props.href = href;
+    props.target = '_blank';
     Comp = 'a';
   }
 
@@ -58,6 +62,8 @@ export default function Button({
     small,
     large,
     search,
+    rgt,
+    lg,
   });
   return (
     <Comp className={classes} {...props}>

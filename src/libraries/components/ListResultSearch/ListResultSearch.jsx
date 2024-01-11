@@ -34,11 +34,14 @@ const cx = classNames.bind(styles);
 function ListResultSearch() {
   const { idLectureCategory, idController } = useSelectLesson();
   const { arraymenu } = useArrayMenu();
+  // console.log("arraymenu", arraymenu);
+  // console.log("idController", idController);
+  // console.log("idLectureCategory", idLectureCategory);
   const [data, setData] = useState([]);
-  console.log('idController', idController);
-  console.log('idLectureCategory', idLectureCategory);
+  console.log("data", data);
   const fetch = async () => {
     const dataLesson = await FetchLessonByPre.fetchLessonByPre(idController);
+
     if (dataLesson !== undefined) {
       setData(dataLesson.data);
     } else {
@@ -56,27 +59,23 @@ function ListResultSearch() {
     const dataLv0 = [];
     for (i = 0; i < length; i++) {
       const dataItemLv0 = await FetchLessonNoCategory.FetchLessonNoCategory(arraymenu[i].idController);
-      console.log('dataItemLv0', dataItemLv0);
       dataLv0.push({
         lectureCategory: `Thư viện ${arraymenu[i]?.title} `,
         idController: arraymenu[i]?.idController,
         lectureItems: [...dataItemLv0.data],
       });
     }
-    console.log('dataLv0', dataLv0);
     setData(dataLv0);
   };
 
   useEffect(() => {
     if (idLectureCategory === false && idController !== false) {
-      console.log('th1');
+
       fetch();
     } else if (idLectureCategory !== false) {
-      console.log('th2');
 
       fetch2();
     } else if (idLectureCategory === false && idController === false) {
-      console.log('th3');
 
       fetch3();
     }
@@ -88,7 +87,9 @@ function ListResultSearch() {
         <div className={cx('title')}>Thư viện Tài Liệu</div>
         <div className={cx('list')}>
           {data !== undefined && data.length > 0 ? (
-            data?.map((item, index) => <ListRusult item={item} key={index} />)
+            data?.map((item, index) => {
+              return (<ListRusult item={item} key={index} />)
+            })
           ) : (
             <div className={cx('error')}></div>
           )}
@@ -119,13 +120,15 @@ const ListRusult = ({ item }) => {
           {item?.lectureCategory || item?.examsAndTestsCategory || item?.lessonPlanCategory || item?.eLearningCategory}
         </div>
         <div className={cx('wrapper-nivigate')}>
-          <span>Xem tất cả</span> | <span onClick={postDocument}>Đưa bài giảng lên</span>
+          <a style={{ color: '#2f5ed6' }} href='http://adminforum.bksgroup.vn/' target='_blank'>Đưa bài giảng lên</a>
         </div>
       </motion.div>
       <motion.div variants={opacity(0.2, 1)} className={cx('wrapper-list')}>
-        {item?.lectureItems?.map((item2, index) => (
-          <ItemResule key={index} item={item2} itemParent={item} />
-        ))}
+        {(item?.lectureItems || item?.examsAndTestsItems || item?.lessonPlanItems || item?.eLearningItems)?.map((item2, index) => {
+          if (index < 10) {
+            return <ItemResule key={index} item={item2} itemParent={item} />
+          }
+        })}
       </motion.div>
     </motion.div>
   );
@@ -143,20 +146,20 @@ const ItemResule = ({ item, itemParent }) => {
   return (
     <div className={cx('wrapper-item')}>
       <div onClick={handleClick} className={cx('img')}>
-        <img src={bgitem} alt="" />
+        <img src={`https://diendan.bkt.net.vn/Resourcelib/${item?.fileThumbnail}` || bgitem} alt="" />
       </div>
       <div className={cx('view')}>
-        {item?.numberOfViews}
+        {item?.numberOfViews || 0}
         <AiFillEye />
       </div>
       <div className={cx('body')}>
         <div onClick={handleClick} className={cx('title-item')}>
           {item?.title}
         </div>
-        <div className={cx('described')}>{item?.description}</div>
+        <div className={cx('described')}>{item?.description || "Chưa có thông tin"}</div>
         <div className={cx('auth-time')}>
-          <span>Quang Huy</span>
-          <span>{moment(item?.createdOnDate).format('Do-MM-YYYY')}</span>
+          <span>{item?.createdByUserName || "Chưa có thông tin"}</span>
+          <span>{item?.createdOnDate ? moment(item?.createdOnDate).format('Do-MM-YYYY') : " "}</span>
         </div>
       </div>
     </div>

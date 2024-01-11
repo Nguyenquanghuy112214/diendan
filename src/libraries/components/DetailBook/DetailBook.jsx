@@ -1,3 +1,5 @@
+
+import { useCallback, useState } from 'react';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,51 +11,81 @@ import { useParams } from 'react-router-dom';
 import { imgDetailPage } from '~/assets/img/detailpage';
 // components
 import Button from '~/libraries/form/button/Button';
-// motion
-import { motion } from 'framer-motion';
+import VideoScrom from '../VideoScrom/VideoScrom';
+import fileDoc from './test.docx'
+import ModalNoLogin from '../ModalNoLogin/ModalNoLogin';
+
 // module css
 import classNames from 'classnames/bind';
 import styles from './_DetailBook.module.scss';
+import useAuth from '~/hooks/redux/auth/useAuth';
+import PageFlip from '../Pageflip/PageFlip';
+import { formatDay } from '~/constants/formatDay';
+import { FetchLessonByIdLecture } from '~/utils/fetchapi/FetchLessonByIdLecture';
+import { useNavigate } from 'react-router-dom';
+import ViewDoc from '../ViewDoc/ViewDoc';
+import Video from '../Video/Video';
+import H5p from '../H5p';
+import DownloadWordFile from '../DownloadFile/DownloadFile';
+import { UpdateView } from '~/utils/fetchapi/UpdateView';
+import { UpdateDownload } from '~/utils/fetchapi/UpdateDownload';
 const cx = classNames.bind(styles);
 function DetailBook() {
+  const navigation = useNavigate()
+  const { auth } = useAuth();
   const { title, namelv0, namelv1, namelv2, iditem, idforum } = useParams();
-  const { book, star, img1, img2, img3 } = imgDetailPage;
-  const data = [
-    {
-      id: 1,
-      img: img1,
-      title: 'Still Standing Tall',
-      sub: 'Life begins at the end of your comfort zone.',
-    },
-    {
-      id: 2,
-      img: img2,
-      title: 'Still Standing Tall',
-      sub: 'Life begins at the end of your comfort zone.',
-    },
-    {
-      id: 3,
-      img: img3,
-      title: 'Still Standing Tall',
-      sub: 'Life begins at the end of your comfort zone.',
-    },
-    {
-      id: 4,
-      img: img3,
-      title: 'Still Standing Tall',
-      sub: 'Life begins at the end of your comfort zone.',
-    },
-  ];
+  const { book, img1, } = imgDetailPage;
+  const [dataDetail, setDataDetail] = useState()
+  const [dataRelate, setDataRelate] = useState([])
+  const [active, setActive] = useState(false);
+  const [activeHelp, setActiveHelp] = useState(false);
+
+
   useEffect(() => {
     const fetch = async () => {
       const dataDetail = await FetchDetaiDocument.FetchDetaiDocument(idforum, iditem);
+
+      const res = await FetchLessonByIdLecture(idforum, dataDetail?.data?.lessonPlanCategoryId || dataDetail?.data?.lectureCategoryId || dataDetail?.data?.examsAndTestsCategorId || dataDetail?.data?.eLearningCategoryId)
+      setDataDetail(dataDetail?.data)
+      setDataRelate(res?.data[0]?.lectureItems || res?.data[0]?.examsAndTestsItems || res?.data[0]?.lessonPlanItems || res?.data[0]?.eLearningItems)
     };
     fetch();
-  }, [iditem]);
+  }, [idforum, iditem]);
 
-  const start = [1, 1, 1, 1, 1];
+  const handleClick = useCallback(async () => {
+    try {
+      const res = await UpdateView(idforum, iditem);
+      console.log('view', res);
+      if (auth?.token) {
+        setActive(!active);
+      } else {
+        setActiveHelp(!activeHelp);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Xử lý lỗi ở đây nếu cần thiết
+    }
+  }, [UpdateView, idforum, iditem, auth?.token, active, activeHelp]);
+  const handleDownload = async () => {
+    const download = await UpdateDownload(idforum, iditem)
+    console.log("download", download);
+
+  };
+  const handleNavigation = (item) => {
+    navigation(`/detaildocument/${idforum}/${title}/${namelv0}/${namelv1}/${namelv2}/${item?.itemId}`)
+  };
+  console.log("dataDetail", dataDetail);
   return (
     <div className={cx('wrapper')}>
+      <ModalNoLogin activeHelp={activeHelp} onClick={handleClick} />
+      {dataDetail?.formatName === 'scorm' && <VideoScrom onClick={handleClick} active={active} data={dataDetail} />}
+      {dataDetail?.formatName === 'pdf' && <PageFlip active={active} onClick={handleClick} data={dataDetail} />}
+      {dataDetail?.formatName === 'docx' && <ViewDoc active={active} onClick={handleClick} data={dataDetail} />}
+      {dataDetail?.formatName === 'video' && <Video active={active} onClick={handleClick} data={dataDetail} />}
+      {dataDetail?.formatName === 'h5p' && active && <H5p active={active} onClick={handleClick} data={dataDetail} />}
+
+
+
       {/*  */}
       <div className={cx('wrapper-title')}>
         <div className={cx('title-navigation')}>
@@ -61,45 +93,40 @@ function DetailBook() {
           {namelv1 === 'null' ? '' : '>'} {namelv1 === 'null' ? '' : namelv1} {namelv2 === 'null' ? '' : '>'}{' '}
           {namelv2 === 'null' ? '' : namelv2}
         </div>
-        <div className={cx('title-post')}>Đưa bài giảng lên</div>
+        <a style={{ color: '#2f5ed6' }} href='http://adminforum.bksgroup.vn/' target='_blank'>Đưa bài giảng lên</a>
       </div>
       {/*  */}
       <div className={cx('wrapper-detail')}>
         {/*  */}
         <div className={cx('top')}>
           <div className={cx('img')}>
-            <img src={book} alt="" />
+            <img src={`https://diendan.bkt.net.vn/Resourcelib/${dataDetail?.fileThumbnail}` || book} alt="" />
           </div>
           <div className={cx('infomation-descriptoion')}>
             <div className={cx('infomation')}>
-              <div className={cx('name')}>Winning Digital Age</div>
+              <div className={cx('name')}>{dataDetail?.title}</div>
               <div className={cx('wrapper-copy', 'm16')}>
                 <div className={cx('item', 'text-color')}>
-                  Avilible Copies
-                  <span>15</span>
+                  Lượt tải về
+                  <span>{dataDetail?.numberOfDowns || 0}</span>
                 </div>
                 <div className={cx('item', 'text-color')}>
-                  Copies In Library
-                  <span>15</span>
+                  Lượt xem
+                  <span>{dataDetail?.numberOfViews || 0}</span>
                 </div>
-                <div className={cx('item', 'text-color')}>
-                  Copies taken-out<span>5</span>
-                </div>
+
               </div>
               <div className={cx('text-color', 'm16')}>
-                Author: <span>Quang Huy</span>
+                Danh mục: <span>{dataDetail?.lectureCategoryName || "Chưa có thông tin"}</span>
               </div>
               <div className={cx('text-color', 'm16')}>
-                Language: <span>English</span>
+                Tác giả: <span>{dataDetail?.createdByUserName || "Chưa có thông tin"}</span>
               </div>
               <div className={cx('text-color', 'm16')}>
-                Publisher: <span>NXB Kim Dong</span>
+                Ngày tạo: <span>{dataDetail?.createdOnDate ? formatDay(dataDetail?.createdOnDate) : "Chưa có thông tin"}</span>
               </div>
               <div className={cx('text-color', 'm16')}>
-                Published Date: <span>24 June 2023</span>
-              </div>
-              <div className={cx('text-color', 'm16')}>
-                Added to Library: <span>10 July 2023</span>
+                Ngày public: <span>{dataDetail?.lastModifiedOnDate ? formatDay(dataDetail?.lastModifiedOnDate) : "Chưa có thông tin"}</span>
               </div>
             </div>
             <div className={cx('wrapper-description')}>
@@ -107,15 +134,14 @@ function DetailBook() {
                 <span className={cx('span1')}>Description:</span>
                 <div className={cx('wrapper2-descriptopn')}>
                   <span className={cx('span2')}>
-                    The practical handbook for understanding and winning in the post-COVID digital age and becoming a 21st century leader.
-                    For every enterprise and its leaders, the digital age is a roller-coaster ride with more than its fair share of thrills
-                    and spills.
+                    {dataDetail?.description || "Chưa có thông tin"}
                   </span>
                   <div className={cx('wrapper-button')}>
-                    <Button primary>Read Now</Button>
-                    <Button outline>Dowload</Button>
+                    <Button primary onClick={handleClick}>Read Now</Button>
+                    {/* {dataDetail?.} */}
+                    {dataDetail?.formatName !== 'h5p' && dataDetail?.formatName !== 'audio' && dataDetail?.formatName !== 'video' && <DownloadWordFile handleDownload={handleDownload} file={`https://diendan.bkt.net.vn/Resourcelib/${dataDetail?.fileLecture || dataDetail?.fileLessonPlan}`} />}
                   </div>
-                  <div className={cx('wrapper-star')}>
+                  {/* <div className={cx('wrapper-star')}>
                     {start.map((item, index) => {
                       return (
                         <span>
@@ -123,14 +149,14 @@ function DetailBook() {
                         </span>
                       );
                     })}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className={cx('wrapper-review')}>
+      {/* <div className={cx('wrapper-review')}>
         <div className={cx('wrapper-review-detail')}>
           <div className={cx('title-review', 'm16')}>Reviews</div>
           <div className={cx('infomation-review')}>
@@ -142,36 +168,38 @@ function DetailBook() {
             </div>
             <div className={cx('date-review')}>Rajesh Dec 2023</div>
           </div>
-          {/*  */}
-          <div className={cx('infomation-review')}>
-            <div className={cx('name-review')}>Xuân Huy</div>
-            <div className={cx('content-review')}>
-              Ấn bản nghệ thuật và văn hóa Ấn Độ 3 Rd..cuốn sách rất hay cho những ai đang chuẩn bị thi công chức.cuốn sách rất hay nên đọc
-              một lần..
-            </div>
-            <div className={cx('date-review')}>Rajesh Dec 2023</div>
-          </div>
+      <div className={cx('infomation-review')}>
+        <div className={cx('name-review')}>Xuân Huy</div>
+        <div className={cx('content-review')}>
+          Ấn bản nghệ thuật và văn hóa Ấn Độ 3 Rd..cuốn sách rất hay cho những ai đang chuẩn bị thi công chức.cuốn sách rất hay nên đọc
+          một lần..
         </div>
-      </div>
-      <div className={cx('wrapper-anotherchoice')}>
-        <div className={cx('title-choice')}>Hãy thử nhiều lựa chọn khác</div>
-        <div className={cx('wrapper-choice')}>
-          {data.map((item, index) => {
-            return (
-              <div key={index} className={cx('item-choice')}>
-                <div className={cx('img')}>
-                  <img src={item.img} alt="" />
-                </div>
-                <div className={cx('content')}>
-                  <div className={cx('content-name')}>{item.title}</div>
-                  <div className={cx('content-sub')}>{item.sub}</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <div className={cx('date-review')}>Rajesh Dec 2023</div>
       </div>
     </div>
+      </div >  */}
+      {dataRelate?.length > 1
+        && <div div className={cx('wrapper-anotherchoice')} >
+          <div className={cx('title-choice')}>Hãy thử nhiều lựa chọn khác</div>
+          <div className={cx('wrapper-choice')}>
+            {dataRelate.map((item, index) => {
+              if (item?.itemId !== dataDetail?.itemId && index < 4)
+                return (
+                  <div onClick={() => handleNavigation(item)} key={index} className={cx('item-choice')}>
+                    <div className={cx('img')}>
+                      <img src={item?.fileThumbnail !== null ? `https://diendan.bkt.net.vn/Resourcelib/${item?.fileThumbnail}` : img1} alt="img" />
+                    </div>
+                    <div className={cx('content')}>
+                      <div className={cx('content-name')}>{item?.title}</div>
+                      <div className={cx('content-sub')}>{item?.description || "Chưa có thông tin"}</div>
+                    </div>
+                  </div>
+                );
+            })}
+          </div>
+        </div>}
+
+    </div >
   );
 }
 

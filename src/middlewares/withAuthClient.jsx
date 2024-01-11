@@ -1,30 +1,26 @@
-import useAuth from '~/hooks/redux/auth/useAuth';
-import Loading from 'libraries/components/loading';
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { routePath } from 'routing/path.routing';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useAuth from '~/hooks/redux/auth/useAuth';
+import Loading from '~/libraries/components/AnimationLoading/Animationloading';
+import { routePath } from '~/routing/pathRouting';
 
-const withAuthClient =
-  ({ children }) =>
-  () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { auth } = useAuth();
+function Auth({ children }) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    useEffect(() => {
-      if (!auth || !auth.token || auth.token.length <= 0) {
-        navigate(routePath.SignIn, {
-          state: { callbackUrl: location.pathname },
-        });
-        return;
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth, location]);
+  const { auth } = useAuth();
 
-    if (auth) {
-      return <div>{children}</div>;
+  useEffect(() => {
+    if (!auth || !auth.token || !auth.token.length < 0) {
+      navigate(routePath.introforum);
+      return;
     }
-    return <Loading />;
-  };
+  }, [auth, location, navigate]);
 
-export default withAuthClient;
+  if (auth !== undefined && auth.token !== undefined) {
+    return <div>{children}</div>;
+  }
+  return <Loading active />;
+}
+
+export default Auth;

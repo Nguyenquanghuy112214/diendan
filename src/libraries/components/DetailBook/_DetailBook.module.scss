@@ -24,14 +24,17 @@
       @include flex(start, start, nowrap);
       height: 500px;
       .img {
+        border: 1px solid #ccc;
+        border-radius: 12px;
         width: 300px;
 
         height: 500px;
         img {
+          padding: 2px;
+          border-radius: 12px;
           height: 100%;
           width: 100%;
           object-fit: cover;
-          border-radius: 4px;
         }
       }
 
@@ -83,6 +86,9 @@
                 font-size: 1.6rem;
               }
               .wrapper-button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
                 margin-top: 20px;
                 margin-left: 20px;
               }

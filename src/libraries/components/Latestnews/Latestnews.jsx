@@ -14,6 +14,7 @@ import classNames from 'classnames/bind';
 import styles from './_Latestnews.module.scss';
 const cx = classNames.bind(styles);
 function Latestnews({ listNews }) {
+  console.log("listNews", listNews);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('latest-news')}>Latest news</div>
@@ -28,28 +29,23 @@ function Latestnews({ listNews }) {
 
 export const NewsItem = ({ item, index }) => {
   const navigate = useNavigate();
-  const { imgnews } = imgNewsPage;
   const { idnews } = useParams();
-  const [img, setImg] = useState([]);
-  const handleError = () => {
-    setImg((img) => [...img, index]);
-  };
+
 
   const handleNextPage = () => {
-    navigate(`/newsdetailpage/${idnews}`);
+    navigate(`/newsdetailpage/${item?.newsId}`);
   };
   return (
     <div className={cx('wrapper-item')}>
       <div className={cx('img')}>
         <img
           onClick={handleNextPage}
-          onError={() => handleError()}
-          src={img.filter((x) => +x === +index) ? imgnews : item.thumbnail}
+          src={`https://diendan.bkt.net.vn/Resourcelib/${item.thumbnail}`}
           alt=""
         />
       </div>
       <div className={cx('wrapper-cate-date')}>
-        <div className={cx('cate')}>Category</div>
+        <div className={cx('cate')}>{item?.categoryNews || "Chưa có thông tin"}</div>
         <div className={cx('date')}>{item.createdOnDate === null ? 'No date' : moment(item?.createdOnDate).format('Do-MM-YYYY')}</div>
       </div>
       <div className={cx('description')}>

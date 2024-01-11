@@ -32,7 +32,7 @@ function NewsContent() {
     {
       fakeid: 1,
       id: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].title !== undefined && dataNews[0].newsId,
-      img: new1,
+      img: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].thumbnail !== undefined && dataNews[0].thumbnail,
       title: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].title !== undefined && dataNews[0].title,
       description: dataNews !== undefined && dataNews[0] !== undefined && dataNews[0].description !== undefined && dataNews[0].description,
       bgcolor: '#F88C3D',
@@ -41,7 +41,7 @@ function NewsContent() {
     {
       fakeid: 2,
       id: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].title !== undefined && dataNews[1].newsId,
-      img: new2,
+      img: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].thumbnail !== undefined && dataNews[1].thumbnail,
       title: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].title !== undefined && dataNews[1].title,
       description: dataNews !== undefined && dataNews[1] !== undefined && dataNews[1].description !== undefined && dataNews[1].description,
       bgcolor: '#9A3BE5',
@@ -50,11 +50,20 @@ function NewsContent() {
     {
       fakeid: 3,
       id: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].title !== undefined && dataNews[2].newsId,
-      img: new3,
+      img: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].thumbnail !== undefined && dataNews[2].thumbnail,
       title: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].title !== undefined && dataNews[2].title,
       description: dataNews !== undefined && dataNews[2] !== undefined && dataNews[2].description !== undefined && dataNews[2].description,
       bgcolor: '#2CB9A7',
       delay: 1.2,
+    },
+    {
+      fakeid: 4,
+      id: dataNews !== undefined && dataNews[3] !== undefined && dataNews[3].title !== undefined && dataNews[3].newsId,
+      img: dataNews !== undefined && dataNews[3] !== undefined && dataNews[3].thumbnail !== undefined && dataNews[3].thumbnail,
+      title: dataNews !== undefined && dataNews[3] !== undefined && dataNews[3].title !== undefined && dataNews[3].title,
+      description: dataNews !== undefined && dataNews[3] !== undefined && dataNews[3].description !== undefined && dataNews[3].description,
+      bgcolor: '#1F94A5',
+      delay: 1.4,
     },
     // {
     //   id: 4,
@@ -68,8 +77,8 @@ function NewsContent() {
     <div className={cx('wrapper')}>
       <Section
         title="Nội dung tin tức"
-        subtitle1="Une agence de jeunes passionnés par le digital et répondent"
-        subtitle2="sur-mesure à votre problématiques de croissance "
+      // subtitle1="Une agence de jeunes passionnés par le digital et répondent"
+      // subtitle2="sur-mesure à votre problématiques de croissance "
       />
       <motion.div
         variants={staggerContainer}
@@ -119,7 +128,7 @@ const NewItem = ({ img, title, bgcolor, id, delay, description, fakeid }) => {
       style={{ backgroundColor: bgcolor }}
     >
       <div className={cx('title')}>
-        <img src={img} alt="" />
+        <img src={`https://diendan.bkt.net.vn/Resourcelib/${img}`} alt="" />
         {title}
       </div>
       <div className={cx('describe')}>

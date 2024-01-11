@@ -27,9 +27,7 @@ function NewsIntroduceDetail() {
     };
     fetch();
   }, [idnews]);
-  const handleError = () => {
-    setImg(imgnews);
-  };
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('wrapper-content')}>
@@ -38,16 +36,16 @@ function NewsIntroduceDetail() {
           <Interweave content={newsActive?.description} />
         </div>
         <div className={cx('img')}>
-          <img onError={() => handleError()} src={img === undefined ? newsActive?.thumbnail : imgnews} alt="" />
+          <img src={`https://diendan.bkt.net.vn/Resourcelib/${newsActive?.thumbnail}`} alt="" />
         </div>
       </div>
       <div className={cx('wrapper-auth-date')}>
         <div className={cx('auth')}>
-          <img src={imgavt} alt="" />
-          Chandler Bing
+          Tác giả: {newsActive?.createdByUser || "Chưa có thông tin"}
+          {/* <img src={imgavt} alt="" /> */}
         </div>
         <div className={cx('cate-date')}>
-          <div className={cx('category')}>Category</div>
+          <div className={cx('category')}>{newsActive?.categoryNews || "Chưa có thông tin"}</div>
           <div className={cx('date')}>
             {newsActive?.createdOnDate === null ? 'No date' : moment(newsActive?.createdOnDate).format('Do-MM-YYYY')}
           </div>

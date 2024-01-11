@@ -27,7 +27,6 @@ function FormRegister(props) {
   };
   const handleSubmit = async (values) => {
     const dataRegister = await Register.register(values);
-    console.log('dataRegister', dataRegister);
     setData(dataRegister);
   };
   useEffect(() => {
@@ -63,8 +62,8 @@ function FormRegister(props) {
           .matches(/(?=(.*[0-9]))(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{5,}/, 'Nhập ít nhất 1 số, 1 chữ thường, 1 chữ hoa')
           .required('Vui lòng nhập mật khẩu'),
         ComfirmPass: Yup.string()
-          .oneOf([Yup.ref('Password'), null], 'Mật khẩu chưa trùng khớp')
-          .required('Vui lòng xác nhận mật khẩu'),
+          .required('Vui lòng xác nhận mật khẩu')
+          .oneOf([Yup.ref('Password'), null], 'Mật khẩu không trùng khớp'),
       })}
       onSubmit={handleSubmit}
     >
@@ -91,6 +90,7 @@ function FormRegister(props) {
               <div className={cx('title')}>Create an account</div>
               <div className={cx('form')}>
                 <Input
+                  sm
                   type="text"
                   name="UserName"
                   title="Name"
@@ -100,6 +100,7 @@ function FormRegister(props) {
                   column
                 />
                 <Input
+                  sm
                   type="email"
                   name="Email"
                   title="Email Address"
@@ -109,6 +110,7 @@ function FormRegister(props) {
                   column
                 />
                 <Input
+                  sm
                   type="password"
                   name="Password"
                   title="Password"
@@ -118,6 +120,7 @@ function FormRegister(props) {
                   column
                 />
                 <Input
+                  sm
                   type="password"
                   name="ComfirmPass"
                   title="Comfirm Password"

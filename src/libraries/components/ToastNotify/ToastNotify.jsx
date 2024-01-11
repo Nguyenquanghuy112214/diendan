@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { GrFormClose } from 'react-icons/gr';
 // thu vien animation
 import { motion, AnimatePresence } from 'framer-motion';
-// animation
-import { planetVariants, staggerContainer } from '~/constants/motion';
 // img
 import { imgToast } from '~/assets/img/toast';
 // Css module

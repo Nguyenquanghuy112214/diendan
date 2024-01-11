@@ -9,7 +9,6 @@ const arraymenu = createSlice({
   initialState: initialState,
   reducers: {
     changeArrayMenu: (state, action) => {
-      console.log('action', action);
       state.menu = action.payload;
     },
   },

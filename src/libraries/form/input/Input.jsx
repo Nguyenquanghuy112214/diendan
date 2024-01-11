@@ -7,12 +7,27 @@ import classNames from 'classnames/bind';
 import styles from './_Input.module.scss';
 const cx = classNames.bind(styles);
 
-export function Input({ forgot, error, touched, title, handleNavigate, onBlur, onClick, type, column, value, placeholder, name, normal }) {
+export function Input({
+  forgot,
+  error,
+  touched,
+  title,
+  handleNavigate,
+  onBlur,
+  onClick,
+  type,
+  column,
+  value,
+  placeholder,
+  name,
+  normal,
+  sm,
+}) {
   const handleClick = () => {
     onBlur();
   };
   return (
-    <div className={cx('wrapper', column ? 'column' : '')}>
+    <div className={cx('wrapper', column ? 'column' : '', sm ? 'sm' : '')}>
       <div className={cx('wrapper-label')}>
         {error && touched && column ? (
           <span className={cx('span', 'span-error')}>{error}</span>

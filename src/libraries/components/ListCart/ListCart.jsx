@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // call api
 import * as FetchThong_Ke from '~/utils/fetchapi/FetchThong_Ke';
@@ -7,28 +7,67 @@ import AnimationNumbers from '../AnimationNumbers/AnimationNumbers';
 // thu vien bieu do tron
 import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
+// img
+import { imgListCart } from '~/assets/img/listcart';
 // module css
 import classNames from 'classnames/bind';
 import styles from './_ListCart.module.scss';
 const cx = classNames.bind(styles);
 function ListCart(props) {
+  const [data, setData] = useState();
+  const { img1, img2, img3, img4 } = imgListCart;
   useEffect(() => {
     const fetch = async () => {
       const dataThongKe = await FetchThong_Ke.fetchThong_Ke();
+      console.log('dataThongKe', dataThongKe);
+      setData(dataThongKe?.data);
     };
     fetch();
   }, []);
+
   return (
     <div className={cx('wrapper')}>
-      <CartItem valuecircle1={40} valuecircle2={60} colorbg="#63D1D1" colorcircle="#82DADA" value={1542} title="Bài giảng trực tuyến" />
-      <CartItem valuecircle1={60} valuecircle2={40} colorbg="#40733383" colorcircle="#77996E" value={1546} title="Video" />
-      <CartItem valuecircle1={80} valuecircle2={20} colorbg="#DD8E55" colorcircle="#E4A577" value={1420} title="Hình ảnh" />
-      <CartItem valuecircle1={30} valuecircle2={70} colorbg="#D97C7C" colorcircle="#E19696" value={4404} title="Người dùng" />
+      <CartItem
+        valuecircle1={40}
+        valuecircle2={60}
+        colorbg="#63D1D1"
+        colorcircle="#82DADA"
+        value={data?.lecture}
+        title="Bài giảng"
+        img={img1}
+      />
+      <CartItem
+        valuecircle1={60}
+        valuecircle2={40}
+        colorbg="#40733383"
+        colorcircle="#77996E"
+        value={data?.lessonPlan}
+        title="Giáo án"
+        img={img2}
+      />
+      <CartItem
+        valuecircle1={80}
+        valuecircle2={20}
+        colorbg="#DD8E55"
+        colorcircle="#E4A577"
+        value={data?.examsAndTests}
+        title="Đề thi và kiểm tra"
+        img={img3}
+      />
+      <CartItem
+        valuecircle1={30}
+        valuecircle2={70}
+        colorbg="#D97C7C"
+        colorcircle="#E19696"
+        value={data?.user}
+        title="Người dùng"
+        img={img4}
+      />
     </div>
   );
 }
 
-const CartItem = ({ valuecircle1, valuecircle2, colorbg, colorcircle, value, title }) => {
+const CartItem = ({ valuecircle1, valuecircle2, colorbg, colorcircle, value, title, img }) => {
   const data = {
     datasets: [
       {
@@ -48,7 +87,7 @@ const CartItem = ({ valuecircle1, valuecircle2, colorbg, colorcircle, value, tit
         <div className={cx('title')}>{title}</div>
       </div>
       <div className={cx('wrapper-circle')}>
-        <Doughnut data={data}></Doughnut>
+        <img src={img} alt="" />
       </div>
     </div>
   );

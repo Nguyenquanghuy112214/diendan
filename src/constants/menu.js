@@ -32,8 +32,24 @@ export const menuHistory = [
     active: true,
 
     children: [
-      { title: 'Học liệu đã tải về', path: routePath.downloadedpage, deleteStorage: true, img: download, hiddenMenu: false, children: [] },
-      { title: 'Học liệu đã tải lên', path: routePath.updatepage, deleteStorage: true, img: upload, hiddenMenu: false, children: [] },
+      {
+        title: 'Học liệu đã tải về',
+        subtitle: '/downloadedpage',
+        path: routePath.downloadedpage,
+        deleteStorage: true,
+        img: download,
+        hiddenMenu: false,
+        children: [],
+      },
+      {
+        title: 'Học liệu đã tải lên',
+        subtitle: '/updatepage',
+        path: routePath.updatepage,
+        deleteStorage: true,
+        img: upload,
+        hiddenMenu: false,
+        children: [],
+      },
     ],
   },
 ];
@@ -45,9 +61,9 @@ export const menuOther = [
     active: true,
 
     children: [
-      { title: 'Archive', img: archive, deleteStorage: true, hiddenMenu: false, children: [] },
-      { title: 'Messages', img: messages, deleteStorage: true, hiddenMenu: false, children: [] },
-      { title: 'Settings', img: settings, deleteStorage: true, hiddenMenu: false, children: [] },
+      { title: 'Trợ giúp', img: archive, deleteStorage: true, hiddenMenu: false, children: [] },
+      { title: 'Liên hệ', img: messages, deleteStorage: true, hiddenMenu: false, children: [] },
+      // { title: 'Settings', img: settings, deleteStorage: true, hiddenMenu: false, children: [] },
     ],
   },
 ];

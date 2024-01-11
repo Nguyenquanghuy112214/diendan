@@ -1,4 +1,4 @@
-export const staggerContainer = (staggerChildren, delayChildren) => ({
+export const staggerContainer = (staggerChildren, delayChildren, delay) => ({
   hidden: {
     opacity: 0,
   },
@@ -7,6 +7,7 @@ export const staggerContainer = (staggerChildren, delayChildren) => ({
 
     transition: {
       duration: 1,
+      delay: delay,
       staggerChildren,
       delayChildren,
     },
@@ -135,5 +136,8 @@ export const zoomIn = (delay, duration, scale) => ({
       duration,
       ease: 'easeIn',
     },
+  },
+  exit: {
+    opacity: 0,
   },
 });

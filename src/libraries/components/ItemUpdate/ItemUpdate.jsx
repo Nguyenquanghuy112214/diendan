@@ -1,62 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+// hook
+import useAuth from '~/hooks/redux/auth/useAuth';
 // thu vien animation
 import { motion } from 'framer-motion';
 // animation
 import { planetVariants, staggerContainer } from '~/constants/motion';
 // img
 import { imgUpdate } from '~/assets/img/updatedpage';
+// call api
+import * as FetchHistoryUpload from '~/utils/fetchapi/FetchHistoryUpload';
+import * as FetchMenu from '~/utils/fetchapi/FetchMenu';
 // Css module
 import classNames from 'classnames/bind';
 import styles from './_ItemUpdate.module.scss';
+
 const cx = classNames.bind(styles);
 function ItemUpdate() {
-  const [indexActive, setIndexActive] = useState();
-  const data = [
-    { id: 1, title: 'Bài giảng đã tải lên' },
-    { id: 2, title: 'Giáo án đã tải lên' },
-    { id: 3, title: 'Đề thi & Kiểm tra đã tải lên' },
-    { id: 4, title: 'Tư liệu đã tải lên' },
-    { id: 5, title: 'Tài liệu E-learning đã tải lên' },
-  ];
+  const { auth } = useAuth();
+  const [idActive, setIdActive] = useState();
+  const [menu, setMenu] = useState([]);
+  const [dataUpdate, setDataUpdate] = useState([]);
 
-  const handleClick = (index) => {
-    if (indexActive === index) {
-      setIndexActive(null);
+  useEffect(() => {
+    const fetch = async () => {
+      const menu = await FetchMenu.fetchMenu();
+      setMenu(menu);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const dataUpdate = await FetchHistoryUpload.FetchHistoryUpload(idActive, auth?.token);
+      setDataUpdate(dataUpdate?.data);
+    };
+    if (idActive !== undefined) fetch();
+  }, [idActive, auth]);
+
+  const handleClick = (item) => {
+    if (idActive === item.menuId) {
+      setIdActive(null);
     } else {
-      setIndexActive(index);
+      setIdActive(item.menuId);
     }
   };
   return (
     <div className={cx('wrapper')}>
-      {data.map((item, index) => {
+      {menu?.map((item, index) => {
         return (
           <div key={index} className={cx('list-item')}>
             <div className={cx('title-update')}>
-              <div onClick={() => handleClick(index)} className={cx('title')}>
-                {item.title}
+              <div onClick={() => handleClick(item)} className={cx('title')}>
+                {`${item.title} đã tải lên`}
               </div>
               <div className={cx('update')}>Tải dữ liệu lên</div>
             </div>
             <motion.div
               initial={{ height: 0, opacity: 0, overflow: 'hidden', marginTop: '0px' }}
               animate={{
-                height: indexActive === index ? 'auto' : 0,
-                opacity: indexActive === index ? 1 : 0,
-                overflow: indexActive === index ? 'visible' : 'hidden',
-                marginTop: indexActive === index ? '20px' : '0px',
+                height: idActive === item?.menuId ? 'auto' : 0,
+                opacity: idActive === item?.menuId ? 1 : 0,
+                overflow: idActive === item?.menuId ? 'visible' : 'hidden',
+                marginTop: idActive === item?.menuId ? '20px' : '0px',
               }}
               transition={{
                 duration: 0.3,
               }}
               className={cx('wrapper-listitem')}
             >
-              <Item />
-              <Item />
-              <Item />
-              <Item />
-              <Item />
-              <Item />
+              {dataUpdate?.map((item, index) => {
+                return <Item key={index} item={item} />;
+              })}
             </motion.div>
           </div>
         );
@@ -65,7 +80,7 @@ function ItemUpdate() {
   );
 }
 
-const Item = () => {
+const Item = ({ item }) => {
   const { iconpublic, iconprivate, iconcourseware } = imgUpdate;
 
   return (
